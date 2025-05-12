@@ -7,25 +7,89 @@
   <style>
     body {
       font-family: sans-serif;
-      text-align: center;
-      padding: 40px;
       background: #fff8f0;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
     }
-    img {
-      max-width: 200px;
-      margin-bottom: 20px;
+    img.logo {
+      max-width: 180px;
+      margin: 10px auto;
     }
     h1 {
       color: #5c3a1a;
     }
-    p {
-      color: #444;
+    label, select, input, button {
+      margin: 10px auto;
+      display: block;
+      font-size: 16px;
+    }
+    select, input[type="file"] {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      padding: 12px 24px;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      background-color: #1ebe5d;
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <img src="Logo%20color.svg" alt="Logo Diseño Peludo" />
-  <h1>🐾 Bienvenido a Diseño Peludo</h1>
-  <p>Comederos personalizados con amor para tu mascota</p>
+
+  <img class="logo" src="Logo%20color.svg" alt="Logo Diseño Peludo" />
+  <h1>Comederos personalizados</h1>
+
+  <label for="size">Elige un tamaño:</label>
+  <select id="size">
+    <option value="S">S (Pequeño)</option>
+    <option value="M">M (Mediano)</option>
+    <option value="L">L (Grande)</option>
+    <option value="XL">XL (Extra grande)</option>
+  </select>
+
+  <label for="image">Sube la imagen de tu mascota:</label>
+  <input type="file" id="image" accept="image/*" />
+
+  <button class="btn" onclick="abrirGPT()">🧠 Enviar imagen a IA</button>
+
+  <a class="btn" href="https://wa.me/34679285964?text=Hola%2C%20quiero%20un%20comedero%20personalizado" target="_blank">
+    📱 Confirmar pedido por WhatsApp
+  </a>
+
+  <p class="note">🔒 Recibirás el diseño final tras completar el pago.</p>
+
+  <script>
+    function abrirGPT() {
+      const fileInput = document.getElementById("image");
+      if (!fileInput.files.length) {
+        alert("Por favor, sube una imagen primero.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function () {
+        const imageData = encodeURIComponent(reader.result);
+        // Reemplaza la URL de abajo con la de tu GPT personalizado si acepta imágenes por URL o base64
+        const url = `https://chat.openai.com/gpts/editor/g-gFtyIFd6sTuXvUOzQszSLoSX?img=${imageData}`;
+        window.open(url, '_blank');
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  </script>
 </body>
 </html>
