@@ -14,12 +14,13 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: 'Missing data' };
     }
 
-    const html = `
+       const html = `
       <h2>Nuevo pedido Diseño Peludo</h2>
       <p><strong>Nombre:</strong> ${nombre}</p>
       <p><strong>Teléfono:</strong> ${telefono}</p>
       <p><strong>Tamaño:</strong> ${size}</p>
     `;
+
 
     await sgMail.send({
       to: 'davidvaquero04@gmail.com',   // Tu correo destino
