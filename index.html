@@ -49,6 +49,18 @@
 <label>1️⃣ Foto original</label>
 <input type="file" id="foto" accept="image/*">
 
+<!-- ▸ Guía para usar el GPT -->
+<div style="max-width:350px;margin:20px auto;text-align:left;font-size:14px;background:#fff3d6;padding:10px;border-radius:8px;border:1px solid #e0c485">
+  <strong>Cómo crear tu ilustración con IA</strong><br>
+  1️⃣  Elige un <em>estilo</em> al abrir ChatGPT:<br>
+  &nbsp;&nbsp;• <b>Minimalista</b> – líneas simples y claras.<br>
+  &nbsp;&nbsp;• <b>Detallado</b> – más sombras y texturas.<br>
+  &nbsp;&nbsp;• <b>Solo la cabeza</b> – retrato de la cara.<br>
+  2️⃣  Adjunta la foto de tu mascota dentro del chat.<br>
+  3️⃣  Descarga la imagen <b>PNG o SVG</b> que genera.<br>
+  4️⃣  Vuelve aquí y súbela en <b>“Ilustración generada por IA”</b>.
+</div>
+
 <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
 
 <label>2️⃣ Ilustración generada por IA (PNG/SVG)</label>
@@ -70,20 +82,22 @@
 let selectedSize = 'S';
 let fotoCargada  = false;
 
-const selector   = document.getElementById('selector');
-const cuencoBase = document.getElementById('cuencoBase');
-const grabado    = document.getElementById('grabado');
-const infoBox    = document.getElementById('info');
-const fileInput  = document.getElementById('foto');
-const designInput= document.getElementById('diseño');
+const selector    = document.getElementById('selector');
+const cuencoBase  = document.getElementById('cuencoBase');
+const grabado     = document.getElementById('grabado');
+const infoBox     = document.getElementById('info');
+const fileInput   = document.getElementById('foto');
+const designInput = document.getElementById('diseño');
 
 /* ---------- selector de tamaño ---------- */
-selector.onclick = (e)=>{
+selector.onclick = e=>{
   if(e.target.tagName !== 'IMG') return;
   [...selector.children].forEach(img=>img.classList.remove('activo'));
   e.target.classList.add('activo');
+
   selectedSize   = e.target.dataset.size;
   cuencoBase.src = e.target.src;
+
   if(!fotoCargada) cuencoBase.style.display='block';
   infoBox.textContent = `Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
 };
@@ -106,7 +120,7 @@ fileInput.onchange = e=>{
   r.readAsDataURL(file);
 };
 
-/* ---------- botón IA (abre tu GPT) ---------- */
+/* ---------- botón IA ---------- */
 document.getElementById('btnIA').onclick = ()=>{
   if(!fileInput.files.length){
     alert('Primero sube la foto original');
@@ -127,11 +141,10 @@ document.getElementById('tramitar').onclick = async ()=>{
     return;
   }
 
-  // lee un archivo y devuelve Base64 (sin encabezado)
-  const toBase64 = file => new Promise(res=>{
-    const r=new FileReader();
-    r.onload=()=>res(r.result.split(',')[1]);
-    r.readAsDataURL(file);
+  const toBase64 = f => new Promise(res=>{
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.readAsDataURL(f);
   });
 
   const imageData  = fileInput.files.length  ? await toBase64(fileInput.files[0])  : null;
@@ -140,12 +153,12 @@ document.getElementById('tramitar').onclick = async ()=>{
   const body = { nombre, telefono: tel, size: selectedSize, imageData, designData };
 
   try{
-    const res = await fetch('/.netlify/functions/tramitar',{
+    const r = await fetch('/.netlify/functions/tramitar',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify(body)
     });
-    if(res.ok){
+    if(r.ok){
       alert('¡Pedido recibido! Te contactaremos para confirmar.');
     }else{
       alert('Error al enviar pedido');
@@ -158,3 +171,4 @@ document.getElementById('tramitar').onclick = async ()=>{
 
 </body>
 </html>
+
