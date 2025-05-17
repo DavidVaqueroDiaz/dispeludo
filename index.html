@@ -1,240 +1,207 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Diseño Peludo – Personaliza tu comedero</title>
-<style>
-  :root{
-    --bg:#fff2e9;
-    --primary:#0ea960;
-    --primary-dark:#0b864c;
-    --border:#e0d6cf;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:sans-serif;
-    background:var(--bg);
-    padding:20px;
-  }
-  h2{font-size:1.3rem;margin-bottom:12px}
-  .contenedor{
-    max-width:1100px;margin:auto;display:flex;gap:32px;
-  }
-  @media(max-width:800px){
-    .contenedor{flex-direction:column}
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diseño Peludo – Personaliza tu comedero</title>
 
-  /* ---------- Previsualización ---------- */
-  .preview-wrapper{
-    flex:1;
-    background:#fff;border:1px solid var(--border);
-    border-radius:8px;padding:20px;
-  }
-  .preview-wrapper h3{font-size:1.25rem;margin-bottom:10px}
-  #preview{
-    position:relative;
-    width:100%;
-    padding-top:100%;           /* cuadrado fluido */
-    border:1px solid var(--border);
-    border-radius:8px;
-    overflow:hidden;
-  }
-  #preview img{
-    position:absolute;
-    top:0;left:0;width:100%;height:100%;object-fit:contain;
-  }
+  <!--  FAVICON  -->
+  <link rel="icon" type="image/svg+xml" href="Logo.svg" />
 
-  /* ---------- Panel de selección ---------- */
-  .panel{
-    width:320px;max-width:100%;
-    background:#fff;border:1px solid var(--border);
-    border-radius:8px;padding:20px;
-  }
-  .cuencos{display:flex;justify-content:space-between;margin-bottom:12px}
-  .cuencos img{
-    width:60px;height:60px;object-fit:contain;
-    border:2px solid var(--border);border-radius:6px;cursor:pointer;
-    transition:.2s;
-  }
-  .cuencos img.activo{border-color:var(--primary)}
-  #precio{
-    background:var(--primary);
-    color:#fff;font-weight:bold;
-    border-radius:6px;
-    text-align:center;
-    padding:6px;margin-bottom:14px;
-    font-size:.9rem;
-  }
-
-  /* ---------- Inputs & botones ---------- */
-  input,button,details{
-    font-size:.9rem;width:100%;
-    border-radius:6px;border:1px solid var(--border);
-    padding:10px;margin-bottom:12px;
-  }
-  input[type=file]{padding:8px}
-  button{
-    background:var(--primary);color:#fff;font-weight:bold;border:none;
-    cursor:pointer;transition:.2s;
-  }
-  button:hover{background:var(--primary-dark)}
-  details summary{cursor:pointer;font-weight:bold;color:#333;user-select:none}
-  details[open]{background:#fff9f6}
-
-  small{font-size:.8rem;color:#555}
-
-</style>
+  <style>
+    :root{
+      --verde:#14a34a;
+      --beige:#fff4ec;
+      --gris:#555;
+      --radius:12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:var(--beige);
+      color:#222;
+      padding:20px;
+    }
+    h2{font-size:1.7rem;margin-bottom:16px}
+    /* --- GRID LAYOUT --------------------------------------------------- */
+    .wrap{
+      max-width:1200px;margin:auto;display:grid;gap:24px;
+      grid-template-columns:minmax(0,1fr) 360px;
+    }
+    @media(max-width:920px){
+      .wrap{grid-template-columns:1fr}
+    }
+    /* --- PREVIEW -------------------------------------------------------- */
+    .previewBox{
+      background:#fff;padding:24px;border-radius:var(--radius);
+      box-shadow:0 0 6px rgba(0,0,0,.08)
+    }
+    .previewBox h3{
+      font-size:1.4rem;margin-bottom:12px
+    }
+    #preview{
+      width:100%;aspect-ratio:1/1;border-radius:var(--radius);
+      object-fit:contain;background:#fafafa
+    }
+    /* --- PANEL DERECHA -------------------------------------------------- */
+    .panel{
+      background:#fff;padding:24px;border-radius:var(--radius);
+      box-shadow:0 0 6px rgba(0,0,0,.08);position:sticky;top:20px
+    }
+    .selector{
+      display:flex;justify-content:space-between;margin-bottom:12px
+    }
+    .selector img{
+      width:60px;height:60px;object-fit:contain;border:2px solid #ddd;
+      border-radius:var(--radius);cursor:pointer;transition:.2s
+    }
+    .selector img.activo{border-color:var(--verde)}
+    #info{
+      background:var(--verde);color:#fff;padding:8px;border-radius:var(--radius);
+      font-weight:600;margin-bottom:16px;text-align:center
+    }
+    /* --- INPUTS & BOTONES ---------------------------------------------- */
+    label{display:block;font-weight:600;margin:12px 0 4px}
+    input[type=file],input[type=text],input[type=tel]{
+      width:100%;padding:10px;border:1px solid #ccc;border-radius:var(--radius);
+      font-size:15px
+    }
+    .btn{
+      width:100%;padding:12px;border:none;border-radius:var(--radius);
+      font-size:15px;font-weight:600;color:#fff;cursor:pointer;
+      background:var(--verde);margin-top:14px
+    }
+    .btn:hover{filter:brightness(.95)}
+    details{margin-top:10px;border:1px solid #f7dcb5;background:#fff8ed;border-radius:var(--radius);padding:12px}
+    summary{cursor:pointer;font-weight:600;margin:-12px -12px 8px -12px;padding:12px}
+    summary::-webkit-details-marker{display:none}
+    .whatsappBox{margin-top:28px;text-align:center;font-size:14px}
+    .waBtn{
+      display:inline-block;margin-top:8px;padding:10px 28px;background:var(--verde);
+      color:#fff;border-radius:var(--radius);text-decoration:none;font-weight:600
+    }
+  </style>
 </head>
 <body>
 
-<div class="contenedor">
-
-  <!-- Previsualización -->
-  <section class="preview-wrapper">
+<div class="wrap">
+  <!-- ===================  PREVISUALIZACIÓN  =================== -->
+  <div class="previewBox">
     <h3>PREVISUALIZACIÓN</h3>
-    <div id="preview">
-      <img id="demo"     src="gato.png" alt="">
-      <img id="grabado"  src=""        alt="" style="display:none">
-    </div>
-  </section>
+    <img id="preview" src="WhatsApp%20Image%202025-05-17%20at%2020.36.18.jpeg.png" alt="Vista previa">
+  </div>
 
-  <!-- Panel derecho -->
-  <aside class="panel">
+  <!-- ===================  PANEL DERECHA  ====================== -->
+  <div class="panel">
     <h2>ELIGE TU COMEDERO</h2>
 
-    <!-- Cuencos -->
-    <div class="cuencos" id="selector">
-      <img src="S.png"  data-size="S"  data-dim="Ø11 cm" data-price="12 €" alt="S">
-      <img src="M.png"  data-size="M"  data-dim="Ø16 cm" data-price="14 €" alt="M">
-      <img src="L.png"  data-size="L"  data-dim="Ø19 cm" data-price="15 €" alt="L">
-      <img src="XL.png" data-size="XL" data-dim="Ø22 cm" data-price="17 €" alt="XL">
+    <div class="selector" id="selector">
+      <img src="XL.png" data-size="XL" data-price="Ø22 cm · 17 €"        data-img="perro%20grande.png"   alt="Comedero XL">
+      <img src="L.png"  data-size="L"  data-price="Ø19 cm · 15 €"        data-img="perro%20mediano.png" alt="Comedero L">
+      <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €"        data-img="perro%20pequeño.png" alt="Comedero M">
+      <img src="S.png"  data-size="S"  data-price="Ø11 cm · 12 €"        data-img="gato.png"            alt="Comedero S">
     </div>
 
-    <div id="precio">Ø11 cm · 12 €</div>
+    <div id="info">Ø22 cm · 17 €</div>
 
-    <!-- 1 -->
-    <label><b>1</b> Sube tu foto original
-      <input type="file" id="foto" accept="image/*">
-    </label>
+    <!-- 1. Foto original -->
+    <label>1️⃣ Sube tu foto original</label>
+    <input type="file" id="fotoOriginal" accept="image/*">
 
-    <!-- guía -->
+    <!-- Guía -->
     <details>
       <summary>📑 Guía para la ilustración con IA</summary>
-      <p style="margin:10px 0 0 0;font-size:.85rem;line-height:1.4">
-        Selecciona uno de los estilos de la lista (Minimalista, Detallado o Solo la cabeza) y sube tu foto.
-        Descarga la ilustración resultante y súbela en el paso&nbsp;2.<br>
-        ¡No olvides elegir bien el encuadre!
+      <p style="font-size:14px;line-height:1.4">
+        1. Pulsa el botón <b>Generar diseño con IA</b>.<br>
+        2. Elige un estilo (<i>Minimalista</i>, <i>Detallado</i>, <i>Solo la cabeza</i>).<br>
+        3. Sube tu foto y descarga la ilustración.<br>
+        4. Vuelve aquí y adjunta el archivo en el paso 2.<br>
+        5. ¡Previsualiza y tramita tu pedido!
       </p>
     </details>
 
-    <!-- Botón IA -->
-    <button id="btnIA">🧠 Generar diseño con IA</button>
+    <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
 
-    <!-- 2 -->
-    <label><b>2</b> Ilustración generada (PNG/SVG)
-      <input type="file" id="dibujo" accept="image/*,image/svg+xml">
-    </label>
+    <!-- 2. Ilustración IA -->
+    <label>2️⃣ Ilustración generada (PNG/SVG)</label>
+    <input type="file" id="fotoIA" accept=".png,.svg">
 
-    <!-- Datos -->
-    <h3 style="margin-top:8px">Datos del pedido</h3>
-    <input id="nombre"  placeholder="Nombre completo">
-    <input id="telefono" placeholder="Teléfono (WhatsApp)">
+    <!-- DATOS -->
+    <h3 style="margin-top:24px">Datos del pedido</h3>
+    <input type="text" id="nombre"  placeholder="Nombre completo">
+    <input type="tel"  id="telefono" placeholder="Teléfono (WhatsApp)">
 
-    <button id="tramitar">📦 Tramitar pedido</button>
+    <button class="btn" id="tramitar">📦 Tramitar pedido</button>
 
-    <p style="font-size:.8rem;margin-top:14px">
+    <!-- WhatsApp ayuda -->
+    <div class="whatsappBox">
       ¿Tienes alguna duda o no puedes hacer tu diseño?<br>
-      Escríbeme por WhatsApp y lo haremos nosotros.
-    </p>
-    <a href="https://wa.me/34679285964" target="_blank">
-      <button style="margin-top:4px">💬 WhatsApp</button>
-    </a>
-  </aside>
-
+      Escríbeme por WhatsApp y lo haremos nosotros.<br>
+      <a class="waBtn" href="https://wa.me/34679285964" target="_blank">🟢 WhatsApp</a>
+    </div>
+  </div>
 </div>
 
-<!-- -------------  JS  ------------- -->
 <script>
-/* Mapa de imagen-demo por talla */
-const demoImg = {
-  S : 'gato.png',
-  M : 'perro pequeno.png',
-  L : 'perro mediano.png',
-  XL: 'perro grande.png'
+/* ---------  PREVISUALIZACIÓN Y SELECTOR  --------- */
+const preview   = document.getElementById('preview');
+const selector  = document.getElementById('selector');
+const info      = document.getElementById('info');
+
+let selected = {
+  size : 'XL',
+  price: 'Ø22 cm · 17 €',
+  img  : 'perro%20grande.png'
 };
 
-/* Estado global */
-let selectedSize = 'S';
-let fotoCargada  = false;
-
-const selector = document.getElementById('selector');
-const demo     = document.getElementById('demo');
-const grabado  = document.getElementById('grabado');
-const precio   = document.getElementById('precio');
-
-/* --- Selector de talla ------------------------------------ */
-selector.onclick = e =>{
-  if(e.target.tagName!=='IMG') return;
-
-  /* resaltado */
-  [...selector.children].forEach(img=>img.classList.remove('activo'));
-  e.target.classList.add('activo');
-
-  /* datos */
-  selectedSize = e.target.dataset.size;
-  precio.textContent = `${e.target.dataset.dim} · ${e.target.dataset.price}`;
-
-  /* demo si aún no hay foto */
-  if(!fotoCargada){
-    demo.src               = demoImg[selectedSize];
-    demo.style.display     = 'block';
-    grabado.style.display  = 'none';
-  }
-};
-
-/* Marca inicial (S activo) */
+/* marcar XL como activo por defecto */
 selector.firstElementChild.classList.add('activo');
 
-/* --- Foto original del cliente ---------------------------- */
-document.getElementById('foto').onchange = e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const rdr = new FileReader();
-  rdr.onload = ev=>{
-    demo.style.display    = 'none';          // ocultamos demo
-    grabado.src           = ev.target.result;
-    grabado.style.display = 'block';
-    fotoCargada           = true;
-  };
-  rdr.readAsDataURL(file);
+/* cambiar preview al elegir comedero */
+selector.onclick = e=>{
+  if(e.target.tagName!=='IMG') return;
+  [...selector.children].forEach(i=>i.classList.remove('activo'));
+  e.target.classList.add('activo');
+
+  selected.size  = e.target.dataset.size;
+  selected.price = e.target.dataset.price;
+  selected.img   = e.target.dataset.img;
+
+  info.textContent = selected.price;
+  preview.src      = selected.img;
 };
 
-/* --- Botón IA provisional (abre tu GPT) ------------------- */
-document.getElementById('btnIA').onclick = ()=>{
-  const file = document.getElementById('foto').files[0];
-  if(!file) return alert('Sube tu foto original primero');
+/* --- botón IA (abre tu GPT en nueva pestaña) --- */
+document.getElementById('btnIA').onclick=()=>{
   window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
 };
 
-/* --- Botón tramitar (sin cambios) ------------------------- */
+/* --- Tramitar pedido -------------------------------------------------- */
 document.getElementById('tramitar').onclick = async ()=>{
   const nombre = document.getElementById('nombre').value.trim();
   const tel    = document.getElementById('telefono').value.trim();
-  if(!nombre || !tel){ alert('Rellena nombre y teléfono'); return; }
 
-  const body = { nombre, telefono:tel, size:selectedSize };
+  if(!nombre || !tel){
+    alert('Rellena nombre y teléfono');
+    return;
+  }
+  const body = { nombre, telefono:tel, size:selected.size };
+
   try{
     const res = await fetch('/.netlify/functions/tramitar',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(body)
+      body:JSON.stringify(body)
     });
-    if(res.ok){ alert('¡Pedido recibido!'); }
-    else      { alert('Error al enviar pedido'); }
-  }catch{ alert('Error de conexión'); }
+    if(res.ok){
+      alert('¡Pedido recibido! Revisa tu WhatsApp, te enviaremos el boceto final.');
+    }else{
+      alert('Error al enviar pedido');
+    }
+  }catch(err){
+    alert('Error de conexión');
+  }
 };
 </script>
-
 </body>
 </html>
