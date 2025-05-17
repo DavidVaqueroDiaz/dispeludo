@@ -23,6 +23,7 @@
   .btn{background:#25d366;color:#fff;border:none;font-weight:bold;cursor:pointer}
   .btn:hover{background:#1ebe5d}
   small{display:block;margin-top:10px;color:#555}
+  label{font-weight:bold;margin-top:14px;display:block}
 </style>
 </head>
 <body>
@@ -45,9 +46,13 @@
 
 <div id="info"></div>
 
+<label>1️⃣ Foto original</label>
 <input type="file" id="foto" accept="image/*">
 
-<button class="btn" id="btnIA">🧠 Enviar imagen a IA</button>
+<button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
+
+<label>2️⃣ Ilustración generada por IA (PNG/SVG)</label>
+<input type="file" id="diseño" accept=".png,.svg,image/*">
 
 <a class="btn" href="https://wa.me/34679285964?text=Hola%20quiero%20un%20comedero%20personalizado" target="_blank">
   📱 Escríbeme por WhatsApp
@@ -58,10 +63,10 @@
 <input id="telefono" placeholder="Teléfono (WhatsApp)">
 <button class="btn" id="tramitar">📦 Tramitar pedido</button>
 
-<small>Recibirás el diseño final tras confirmar el pedido.</small>
+<small>Recibirás un correo con las dos imágenes adjuntas para confirmar el pedido.</small>
 
 <script>
-/* ---------- variables globales ---------- */
+/* ---------- variables ---------- */
 let selectedSize = 'S';
 let fotoCargada  = false;
 
@@ -70,19 +75,16 @@ const cuencoBase = document.getElementById('cuencoBase');
 const grabado    = document.getElementById('grabado');
 const infoBox    = document.getElementById('info');
 const fileInput  = document.getElementById('foto');
+const designInput= document.getElementById('diseño');
 
 /* ---------- selector de tamaño ---------- */
 selector.onclick = (e)=>{
   if(e.target.tagName !== 'IMG') return;
-
   [...selector.children].forEach(img=>img.classList.remove('activo'));
   e.target.classList.add('activo');
-
   selectedSize   = e.target.dataset.size;
   cuencoBase.src = e.target.src;
-
   if(!fotoCargada) cuencoBase.style.display='block';
-
   infoBox.textContent = `Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
 };
 
@@ -90,29 +92,33 @@ selector.onclick = (e)=>{
 selector.firstElementChild.classList.add('activo');
 infoBox.textContent = 'Ø11 cm · 12 €';
 
-/* ---------- subida de imagen ---------- */
-fileInput.onchange = (e)=>{
+/* ---------- subida de foto original ---------- */
+fileInput.onchange = e=>{
   const file = e.target.files[0];
   if(!file) return;
-
-  const reader = new FileReader();
-  reader.onload = ev=>{
-    grabado.src           = ev.target.result;
-    grabado.style.display = 'block';
-    cuencoBase.style.display = 'none';
+  const r = new FileReader();
+  r.onload = ev=>{
+    grabado.src = ev.target.result;
+    grabado.style.display='block';
+    cuencoBase.style.display='none';
     fotoCargada = true;
   };
-  reader.readAsDataURL(file);
+  r.readAsDataURL(file);
 };
 
-/* ---------- botón IA (abre tu GPT en otra pestaña) ---------- */
+/* ---------- botón IA (abre tu GPT) ---------- */
 document.getElementById('btnIA').onclick = ()=>{
-  const file = fileInput.files[0];
-  if(!file) return alert('Sube una imagen primero');
-  window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
+  if(!fileInput.files.length){
+    alert('Primero sube la foto original');
+    return;
+  }
+  window.open(
+    'https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota',
+    '_blank'
+  );
 };
 
-/* ---------- botón Tramitar pedido ---------- */
+/* ---------- botón Tramitar ---------- */
 document.getElementById('tramitar').onclick = async ()=>{
   const nombre = document.getElementById('nombre').value.trim();
   const tel    = document.getElementById('telefono').value.trim();
@@ -121,23 +127,17 @@ document.getElementById('tramitar').onclick = async ()=>{
     return;
   }
 
-  /* leer la imagen en base64 (sin encabezado data:) */
-  let imageData = null;
-  if(fileInput.files.length){
-    const file = fileInput.files[0];
-    imageData = await new Promise(res=>{
-      const r = new FileReader();
-      r.onload = () => res(r.result.split(',')[1]);
-      r.readAsDataURL(file);
-    });
-  }
+  // lee un archivo y devuelve Base64 (sin encabezado)
+  const toBase64 = file => new Promise(res=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.readAsDataURL(file);
+  });
 
-  const body = {
-    nombre,
-    telefono: tel,
-    size: selectedSize,
-    imageData                // puede ser null si no hay foto
-  };
+  const imageData  = fileInput.files.length  ? await toBase64(fileInput.files[0])  : null;
+  const designData = designInput.files.length? await toBase64(designInput.files[0]): null;
+
+  const body = { nombre, telefono: tel, size: selectedSize, imageData, designData };
 
   try{
     const res = await fetch('/.netlify/functions/tramitar',{
@@ -146,14 +146,11 @@ document.getElementById('tramitar').onclick = async ()=>{
       body: JSON.stringify(body)
     });
     if(res.ok){
-      alert('¡Pedido recibido!');
+      alert('¡Pedido recibido! Te contactaremos para confirmar.');
     }else{
-      const errText = await res.text();
-      console.error(errText);
       alert('Error al enviar pedido');
     }
   }catch(err){
-    console.error(err);
     alert('Error de conexión');
   }
 };
