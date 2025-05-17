@@ -1,0 +1,8 @@
+{
+  "name": "dispeludo-functions",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@sendgrid/mail": "^8.0.0"
+  }
+}
