@@ -4,173 +4,207 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Diseño Peludo</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
-  *{box-sizing:border-box}
-  body{font-family:sans-serif;margin:0;padding:20px;background:#fff8f0;text-align:center}
-  .logo{max-width:180px;margin:10px auto}
+:root{
+  --bg:#fff7f3;
+  --card:#ffffff;
+  --brand:#1ebe5d;
+  --brand-dark:#13924a;
+  --border:#e9ddd5;
+  --shadow:0 6px 18px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',sans-serif;background:var(--bg);
+  padding:30px 10px;min-height:100vh;color:#444;
+}
+h2,h3{font-weight:600;color:#222;margin-bottom:.3em}
+img{display:block;max-width:100%}
 
-  .selector{display:flex;justify-content:center;gap:10px;margin:20px 0}
-  .selector img{width:80px;height:80px;object-fit:contain;border:2px solid #ccc;border-radius:8px;cursor:pointer;transition:.2s}
-  .selector img.activo{border-color:#25d366}
+.wrapper{
+  display:grid;gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  max-width:1300px;margin:0 auto;
+}
 
-  #preview{position:relative;width:350px;height:350px;margin:0 auto;overflow:hidden}
-  #preview img{width:100%;height:100%;object-fit:contain}
-  #grabado{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:.75;pointer-events:none;display:none}
+/* -------- columna izquierda -------- */
+.panel{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:24px;box-shadow:var(--shadow)
+}
+#preview{position:relative;width:100%;padding-top:100%;overflow:hidden;border-radius:12px;margin-top:8px;border:1px solid var(--border)}
+#preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#grabado{opacity:.78;pointer-events:none;display:none}
 
-  #info{width:350px;margin:8px auto 16px auto;background:#444;color:#fff;padding:6px;font-size:14px;border-radius:4px}
+/* -------- selector tamaños -------- */
+.selector{display:flex;justify-content:center;gap:14px;margin:18px 0}
+.selector img{width:75px;height:75px;object-fit:contain;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:.25s}
+.selector img:hover{transform:translateY(-3px)}
+.selector img.activo{border-color:var(--brand)}
 
-  details{max-width:350px;margin:20px auto;text-align:left;font-size:14px;border:1px solid #e0c485;border-radius:8px;background:#fff3d6}
-  details[open]{box-shadow:0 2px 4px rgba(0,0,0,.15)}
-  summary{padding:10px;cursor:pointer;font-weight:bold;outline:none}
-  details div{padding:0 10px 10px}
+/* info barra */
+#info{background:var(--brand-dark);color:#fff;font-weight:500;text-align:center;
+  padding:6px 10px;border-radius:6px;margin:10px 0}
 
-  input,button{font-size:16px;padding:10px;border-radius:8px;border:1px solid #ccc;margin:8px auto;display:block;width:90%;max-width:350px}
-  .btn{background:#25d366;color:#fff;border:none;font-weight:bold;cursor:pointer}
-  .btn:hover{background:#1ebe5d}
-  small{display:block;margin-top:10px;color:#555}
-  label{font-weight:bold;margin-top:14px;display:block}
+/* -------- módulo IA / chat -------- */
+details{border:1px solid var(--border);border-radius:12px;background:#fff8e9;margin:14px 0}
+summary{cursor:pointer;padding:12px;font-weight:600}
+details[open]{box-shadow:var(--shadow)}
+details div{padding:0 14px 16px;font-size:14px;line-height:1.35}
+
+/* inputs & botones */
+label{font-weight:600;margin-top:16px;display:block}
+input[type=file],input[type=text],input[type=tel],button,.btn-link{
+  width:100%;max-width:400px;font-size:15px;padding:11px 12px;border-radius:10px;
+  border:1px solid var(--border);margin:10px auto
+}
+button.btn{background:var(--brand);color:#fff;border:none;font-weight:600;cursor:pointer;transition:.25s}
+button.btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
+.btn-link{background:var(--brand);color:#fff;text-decoration:none;text-align:center;display:block}
+small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
+
+/* -------- ilustración vector mini -------- */
+.vector-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:18px;background:#fff}
+.vector-box img{max-height:180px;margin:0 auto}
+
+@media (min-width:900px){
+  /* mantenemos proporción 4/6 para preview vs panel derecho */
+  .wrapper{grid-template-columns:1.3fr .9fr}
+}
 </style>
 </head>
 <body>
 
-<img class="logo" src="Logo%20color.svg" alt="Logo Diseño Peludo">
+<div class="wrapper">
 
-<h2>Sube la foto de tu mascota y elige tamaño</h2>
+  <!-- ----------  COLUMNA IZQUIERDA  ---------- -->
+  <div class="panel">
+    <h2>PREVISUALIZACIÓN</h2>
 
-<div class="selector" id="selector">
-  <img src="S.png"  data-size="S"  data-diam="11" data-price="12" alt="Comedero S">
-  <img src="M.png"  data-size="M"  data-diam="16" data-price="14" alt="Comedero M">
-  <img src="L.png"  data-size="L"  data-diam="19" data-price="15" alt="Comedero L">
-  <img src="XL.png" data-size="XL" data-diam="22" data-price="17" alt="Comedero XL">
-</div>
+    <div id="preview">
+      <img id="cuencoBase" src="S.png" alt="Vista previa">
+      <img id="grabado"   src=""    alt="">
+    </div>
 
-<div id="preview">
-  <img id="cuencoBase" src="S.png" alt="Vista previa">
-  <img id="grabado"   src=""    alt="">
-</div>
-
-<div id="info"></div>
-
-<label>1️⃣ Foto original</label>
-<input type="file" id="foto" accept="image/*">
-
-<!-- ▸ Guía desplegable -->
-<details>
-  <summary>📋 Cómo crear tu ilustración con IA</summary>
-  <div>
-    1️⃣  Elige un <em>estilo</em> en ChatGPT:<br>
-    &nbsp;&nbsp;• <b>Minimalista</b> – líneas simples y claras.<br>
-    &nbsp;&nbsp;• <b>Detallado</b> – más sombras y texturas.<br>
-    &nbsp;&nbsp;• <b>Solo la cabeza</b> – retrato de la cara.<br><br>
-    2️⃣  Adjunta la foto de tu mascota dentro del chat.<br>
-    3️⃣  Descarga la imagen <b>PNG o SVG</b> que genera.<br>
-    4️⃣  Vuelve aquí y súbela en <b>“Ilustración generada por IA”</b>.
+    <label style="margin-top:22px">1️⃣ Foto original</label>
+    <input type="file" id="foto" accept="image/*">
   </div>
-</details>
 
-<button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
+  <!-- ----------  COLUMNA DERECHA  ---------- -->
+  <div class="panel">
 
-<label>2️⃣ Ilustración generada por IA (PNG/SVG)</label>
-<input type="file" id="diseño" accept=".png,.svg,image/*">
+    <!-- Selector -->
+    <h2>ELIGE TU COMEDERO</h2>
+    <div class="selector" id="selector">
+      <img src="XL.png" data-size="XL" data-diam="22" data-price="17" alt="XL">
+      <img src="L.png"  data-size="L"  data-diam="19" data-price="15" alt="L">
+      <img src="M.png"  data-size="M"  data-diam="16" data-price="14" alt="M">
+      <img src="S.png"  data-size="S"  data-diam="11" data-price="12" alt="S">
+    </div>
+    <div id="info"></div>
 
-<a class="btn" href="https://wa.me/34679285964?text=Hola%20quiero%20un%20comedero%20personalizado" target="_blank">
-  📱 Escríbeme por WhatsApp
-</a>
+    <!-- Guía IA -->
+    <details>
+      <summary>📋 Guía para la ilustración con IA</summary>
+      <div>
+        1️⃣ Elige un estilo en ChatGPT:<br>
+        &nbsp;&nbsp;• <b>Minimalista</b> &nbsp;• <b>Detallado</b> &nbsp;• <b>Solo la cabeza</b><br><br>
+        2️⃣ Adjunta la foto de tu mascota en el chat.<br>
+        3️⃣ Descarga la imagen <b>PNG o SVG</b>.<br>
+        4️⃣ Súbela abajo en “Ilustración generada”.
+      </div>
+    </details>
 
-<h3>Datos para tramitar el pedido</h3>
-<input id="nombre"  placeholder="Nombre completo">
-<input id="telefono" placeholder="Teléfono (WhatsApp)">
-<button class="btn" id="tramitar">📦 Tramitar pedido</button>
+    <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
 
-<small>Recibirás un correo con las dos imágenes adjuntas para confirmar el pedido.</small>
+    <label>2️⃣ Ilustración generada (PNG/SVG)</label>
+    <input type="file" id="diseño" accept=".png,.svg,image/*">
+
+    <div class="vector-box" id="vectorPreview" style="display:none">
+      <img id="vectorImg" src="" alt="Vector Preview">
+    </div>
+
+    <a class="btn-link" href="https://wa.me/34679285964?text=Hola%20quiero%20un%20comedero%20personalizado" target="_blank">
+      📱 Escríbeme por WhatsApp
+    </a>
+
+    <h3 style="margin-top:26px">Datos del pedido</h3>
+    <input id="nombre"  placeholder="Nombre completo" type="text">
+    <input id="telefono" placeholder="Teléfono (WhatsApp)" type="tel">
+    <button class="btn" id="tramitar">📦 Tramitar pedido</button>
+
+    <small>Te enviaremos un correo con ambas imágenes para confirmar el diseño.</small>
+  </div>
+</div>
 
 <script>
 /* ---------- variables ---------- */
-let selectedSize = 'S';
-let fotoCargada  = false;
+let selectedSize='S', fotoCargada=false;
+const $=id=>document.getElementById(id);
+const selector=$('selector'), cuencoBase=$('cuencoBase'), grabado=$('grabado');
+const infoBox=$('info'), fileInput=$('foto'), designInput=$('diseño');
+const vectorBox=$('vectorPreview'), vectorImg=$('vectorImg');
 
-const selector    = document.getElementById('selector');
-const cuencoBase  = document.getElementById('cuencoBase');
-const grabado     = document.getElementById('grabado');
-const infoBox     = document.getElementById('info');
-const fileInput   = document.getElementById('foto');
-const designInput = document.getElementById('diseño');
-
-/* ---------- selector de tamaño ---------- */
-selector.onclick = e=>{
-  if(e.target.tagName !== 'IMG') return;
-  [...selector.children].forEach(img=>img.classList.remove('activo'));
+/* selector */
+selector.onclick=e=>{
+  if(e.target.tagName!=='IMG')return;
+  [...selector.children].forEach(i=>i.classList.remove('activo'));
   e.target.classList.add('activo');
-  selectedSize   = e.target.dataset.size;
-  cuencoBase.src = e.target.src;
-  if(!fotoCargada) cuencoBase.style.display='block';
-  infoBox.textContent = `Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
+  selectedSize=e.target.dataset.size;
+  cuencoBase.src=e.target.src;
+  if(!fotoCargada)cuencoBase.style.display='block';
+  infoBox.textContent=`Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
+};
+selector.children[3].classList.add('activo'); // S inicial
+infoBox.textContent='Ø11 cm · 12 €';
+
+/* preview foto mascota */
+fileInput.onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    grabado.src=ev.target.result;grabado.style.display='block';
+    cuencoBase.style.display='none';fotoCargada=true;
+  };r.readAsDataURL(f);
 };
 
-/* valor inicial */
-selector.firstElementChild.classList.add('activo');
-infoBox.textContent = 'Ø11 cm · 12 €';
-
-/* ---------- subida de foto original ---------- */
-fileInput.onchange = e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const r = new FileReader();
-  r.onload = ev=>{
-    grabado.src = ev.target.result;
-    grabado.style.display='block';
-    cuencoBase.style.display='none';
-    fotoCargada = true;
-  };
-  r.readAsDataURL(file);
+/* preview vector IA */
+designInput.onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    vectorImg.src=ev.target.result;vectorBox.style.display='block';
+  };r.readAsDataURL(f);
 };
 
-/* ---------- botón IA ---------- */
-document.getElementById('btnIA').onclick = ()=>{
-  if(!fileInput.files.length){
-    alert('Primero sube la foto original');
-    return;
-  }
-  window.open(
-    'https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota',
-    '_blank'
-  );
+/* botón IA */
+$('btnIA').onclick=()=>{
+  if(!fileInput.files.length)return alert('Primero sube la foto original');
+  window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
 };
 
-/* ---------- botón Tramitar ---------- */
-document.getElementById('tramitar').onclick = async ()=>{
-  const nombre = document.getElementById('nombre').value.trim();
-  const tel    = document.getElementById('telefono').value.trim();
-  if(!nombre || !tel){
-    alert('Rellena nombre y teléfono');
-    return;
-  }
+/* tramitar */
+$('tramitar').onclick=async()=>{
+  const nombre=$('nombre').value.trim(), tel=$('telefono').value.trim();
+  if(!nombre||!tel)return alert('Rellena nombre y teléfono');
 
-  const toBase64 = f => new Promise(res=>{
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.readAsDataURL(f);
-  });
-
-  const imageData  = fileInput.files.length  ? await toBase64(fileInput.files[0])  : null;
-  const designData = designInput.files.length? await toBase64(designInput.files[0]): null;
-
-  const body = { nombre, telefono: tel, size: selectedSize, imageData, designData };
+  const toB64=f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f);});
+  const imageData=fileInput.files.length?await toB64(fileInput.files[0]):null;
+  const designData=designInput.files.length?await toB64(designInput.files[0]):null;
 
   try{
-    const r = await fetch('/.netlify/functions/tramitar',{
+    const res=await fetch('/.netlify/functions/tramitar',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(body)
+      body:JSON.stringify({nombre,telefono:tel,size:selectedSize,imageData,designData})
     });
-    if(r.ok){
-      alert('¡Pedido recibido! Te contactaremos para confirmar.');
-    }else{
-      alert('Error al enviar pedido');
-    }
-  }catch(err){
-    alert('Error de conexión');
-  }
+    res.ok?alert('¡Pedido recibido!'):alert('Error al enviar');
+  }catch{alert('Error de conexión');}
 };
 </script>
 
