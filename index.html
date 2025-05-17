@@ -62,49 +62,72 @@
 
 <script>
 let selectedSize='S';
-const selector=document.getElementById('selector');
-const cuencoBase=document.getElementById('cuencoBase');
-const grabado=document.getElementById('grabado');
-const infoBox=document.getElementById('info');
+const selector   = document.getElementById('selector');
+const cuencoBase = document.getElementById('cuencoBase');
+const grabado    = document.getElementById('grabado');
+const infoBox    = document.getElementById('info');
 
-// selector de tamaño
-selector.onclick=e=>{
+/* --- selector de tamaño --- */
+selector.onclick = e=>{
  if(e.target.tagName!=='IMG') return;
  [...selector.children].forEach(img=>img.classList.remove('activo'));
  e.target.classList.add('activo');
- selectedSize=e.target.dataset.size;
- cuencoBase.src=e.target.src;
- infoBox.textContent=`${e.target.dataset.dim} · ${e.target.dataset.price}`;
+ selectedSize   = e.target.dataset.size;
+ cuencoBase.src = e.target.src;
+ infoBox.textContent = `${e.target.dataset.dim} · ${e.target.dataset.price}`;
 };
-selector.firstElementChild.classList.add('activo'); // S por defecto
-infoBox.textContent=`Ø15 cm · 6 cm alto · 20 €`;
+selector.firstElementChild.classList.add('activo');
+infoBox.textContent = 'Ø15 cm · 6 cm alto · 20 €';
 
-// subida de imagen y miniatura
-document.getElementById('foto').onchange=e=>{
- const file=e.target.files[0];
+/* --- subida de imagen + overlay --- */
+document.getElementById('foto').onchange = e=>{
+ const file = e.target.files[0];
  if(!file) return;
- const reader=new FileReader();
- reader.onload=ev=>{
-   grabado.src=ev.target.result; // overlay provisional
- };
+ const reader = new FileReader();
+ reader.onload = ev=>{ grabado.src = ev.target.result; };
  reader.readAsDataURL(file);
 };
 
-// botón IA (flujo provisional)
-document.getElementById('btnIA').onclick=()=>{
- const file=document.getElementById('foto').files[0];
+/* --- botón IA (flujo provisional) --- */
+document.getElementById('btnIA').onclick = ()=>{
+ const file = document.getElementById('foto').files[0];
  if(!file) return alert('Sube una imagen primero');
  window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
 };
 
-// botón tramitar (demo)
-document.getElementById('tramitar').onclick=()=>{
- const nombre=document.getElementById('nombre').value.trim();
- const tel   =document.getElementById('telefono').value.trim();
- if(!nombre||!tel) return alert('Rellena nombre y teléfono');
- alert('Pedido registrado (flujo demo). Más adelante se enviará a David automáticamente.');
+/* --- botón Tramitar pedido -> Netlify Function --- */
+document.getElementById('tramitar').onclick = async ()=>{
+  const nombre = document.getElementById('nombre').value.trim();
+  const tel    = document.getElementById('telefono').value.trim();
+  if(!nombre || !tel){
+    alert('Rellena nombre y teléfono');
+    return;
+  }
+
+  const body = {
+    nombre,
+    telefono: tel,
+    size: selectedSize
+    // photo y svg se añadirán más adelante
+  };
+
+  try{
+    const res = await fetch('/.netlify/functions/tramitar',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    if(res.ok){
+      alert('¡Pedido recibido! (demo función)');
+    }else{
+      alert('Error al enviar pedido');
+    }
+  }catch(err){
+    alert('Error de conexión');
+  }
 };
 </script>
 
 </body>
 </html>
+
