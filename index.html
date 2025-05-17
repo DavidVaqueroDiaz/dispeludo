@@ -15,7 +15,11 @@
 
   #preview{position:relative;width:350px;height:350px;margin:0 auto;overflow:hidden}
   #preview img{width:100%;height:100%;object-fit:contain}
-  #grabado{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.7;pointer-events:none}
+  #grabado{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    object-fit:contain;opacity:.7;pointer-events:none;
+    display:none;                   /* 🔸 oculto mientras no haya foto */
+  }
 
   .info-hover{display:none;position:absolute;bottom:0;left:0;width:100%;background:rgba(0,0,0,.7);color:#fff;padding:6px;font-size:14px}
   #preview:hover .info-hover{display:block}
@@ -32,7 +36,6 @@
 
 <h2>Sube la foto de tu mascota y elige tamaño</h2>
 
-<!-- Selector de tamaños -->
 <div class="selector" id="selector">
   <img src="S.png"  data-size="S"  data-dim="Ø15 cm · 6 cm alto"  data-price="20 €" alt="Comedero S">
   <img src="M.png"  data-size="M"  data-dim="Ø18 cm · 7 cm alto"  data-price="25 €" alt="Comedero M">
@@ -40,14 +43,12 @@
   <img src="XL.png" data-size="XL" data-dim="Ø26 cm · 9 cm alto"  data-price="35 €" alt="Comedero XL">
 </div>
 
-<!-- Vista previa del cuenco con overlay -->
 <div id="preview">
   <img id="cuencoBase" src="S.png" alt="Vista previa">
   <img id="grabado" src="" alt="">
   <div class="info-hover" id="info"></div>
 </div>
 
-<!-- Subida de imagen -->
 <input type="file" id="foto" accept="image/*">
 
 <button class="btn" id="btnIA">🧠 Enviar imagen a IA</button>
@@ -87,7 +88,10 @@ document.getElementById('foto').onchange = e=>{
  const file = e.target.files[0];
  if(!file) return;
  const reader = new FileReader();
- reader.onload = ev=>{ grabado.src = ev.target.result; };
+ reader.onload = ev=>{
+   grabado.src = ev.target.result;
+   grabado.style.display = 'block';       /* 🔸 mostrar overlay */
+ };
  reader.readAsDataURL(file);
 };
 
@@ -128,4 +132,3 @@ document.getElementById('tramitar').onclick = async ()=>{
 
 </body>
 </html>
-
