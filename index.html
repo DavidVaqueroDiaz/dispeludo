@@ -19,6 +19,11 @@
 
   #info{width:350px;margin:8px auto 16px auto;background:#444;color:#fff;padding:6px;font-size:14px;border-radius:4px}
 
+  details{max-width:350px;margin:20px auto;text-align:left;font-size:14px;border:1px solid #e0c485;border-radius:8px;background:#fff3d6}
+  details[open]{box-shadow:0 2px 4px rgba(0,0,0,.15)}
+  summary{padding:10px;cursor:pointer;font-weight:bold;outline:none}
+  details div{padding:0 10px 10px}
+
   input,button{font-size:16px;padding:10px;border-radius:8px;border:1px solid #ccc;margin:8px auto;display:block;width:90%;max-width:350px}
   .btn{background:#25d366;color:#fff;border:none;font-weight:bold;cursor:pointer}
   .btn:hover{background:#1ebe5d}
@@ -49,17 +54,19 @@
 <label>1️⃣ Foto original</label>
 <input type="file" id="foto" accept="image/*">
 
-<!-- ▸ Guía para usar el GPT -->
-<div style="max-width:350px;margin:20px auto;text-align:left;font-size:14px;background:#fff3d6;padding:10px;border-radius:8px;border:1px solid #e0c485">
-  <strong>Cómo crear tu ilustración con IA</strong><br>
-  1️⃣  Elige un <em>estilo</em> al abrir ChatGPT:<br>
-  &nbsp;&nbsp;• <b>Minimalista</b> – líneas simples y claras.<br>
-  &nbsp;&nbsp;• <b>Detallado</b> – más sombras y texturas.<br>
-  &nbsp;&nbsp;• <b>Solo la cabeza</b> – retrato de la cara.<br>
-  2️⃣  Adjunta la foto de tu mascota dentro del chat.<br>
-  3️⃣  Descarga la imagen <b>PNG o SVG</b> que genera.<br>
-  4️⃣  Vuelve aquí y súbela en <b>“Ilustración generada por IA”</b>.
-</div>
+<!-- ▸ Guía desplegable -->
+<details>
+  <summary>📋 Cómo crear tu ilustración con IA</summary>
+  <div>
+    1️⃣  Elige un <em>estilo</em> en ChatGPT:<br>
+    &nbsp;&nbsp;• <b>Minimalista</b> – líneas simples y claras.<br>
+    &nbsp;&nbsp;• <b>Detallado</b> – más sombras y texturas.<br>
+    &nbsp;&nbsp;• <b>Solo la cabeza</b> – retrato de la cara.<br><br>
+    2️⃣  Adjunta la foto de tu mascota dentro del chat.<br>
+    3️⃣  Descarga la imagen <b>PNG o SVG</b> que genera.<br>
+    4️⃣  Vuelve aquí y súbela en <b>“Ilustración generada por IA”</b>.
+  </div>
+</details>
 
 <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
 
@@ -94,10 +101,8 @@ selector.onclick = e=>{
   if(e.target.tagName !== 'IMG') return;
   [...selector.children].forEach(img=>img.classList.remove('activo'));
   e.target.classList.add('activo');
-
   selectedSize   = e.target.dataset.size;
   cuencoBase.src = e.target.src;
-
   if(!fotoCargada) cuencoBase.style.display='block';
   infoBox.textContent = `Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
 };
@@ -171,4 +176,3 @@ document.getElementById('tramitar').onclick = async ()=>{
 
 </body>
 </html>
-
