@@ -4,50 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Diseño Peludo – Personaliza tu comedero</title>
-
-  <!--  FAVICON  -->
   <link rel="icon" type="image/svg+xml" href="Logo.svg" />
-
   <style>
     :root{
       --verde:#14a34a;
       --beige:#fff4ec;
       --gris:#555;
       --radius:12px;
+      scroll-behavior:smooth;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      background:var(--beige);
-      color:#222;
-      padding:20px;
+
+    /* --------  HERO  ----------------------------------------- */
+    .hero{
+      height:100vh;width:100%;
+      background:url("Diseño%20sin%20título%20(25).png") center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;
+      position:relative;
     }
-    h2{font-size:1.7rem;margin-bottom:16px}
-    /* --- GRID ----------------------------------------------------------- */
+    .hero::after{          /* leve overlay para legibilidad */
+      content:"";position:absolute;inset:0;
+      background:rgba(0,0,0,.35);
+    }
+    .hero button{
+      position:relative;           /* sobre el overlay */
+      padding:18px 36px;font-size:1.4rem;
+      background:var(--verde);color:#fff;border:none;
+      border-radius:var(--radius);cursor:pointer;
+      font-weight:700;letter-spacing:.5px;
+      box-shadow:0 4px 10px rgba(0,0,0,.2);
+      transition:.2s;
+    }
+    .hero button:hover{transform:translateY(-3px)}
+
+    /* --------  LAYOUT PRINCIPAL  ----------------------------- */
+    body{background:var(--beige);color:#222;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+
     .wrap{
-      max-width:1200px;margin:auto;display:grid;gap:24px;
+      max-width:1200px;margin:auto;padding:40px 20px;display:grid;gap:24px;
       grid-template-columns:minmax(0,1fr) 360px;
     }
-    @media(max-width:920px){
-      .wrap{grid-template-columns:1fr}
-    }
-    /* --- PREVIEW -------------------------------------------------------- */
+    @media(max-width:920px){.wrap{grid-template-columns:1fr}}
+
+    /* --------  PREVIEW  -------------------------------------- */
     .previewBox{
       background:#fff;padding:24px;border-radius:var(--radius);
       box-shadow:0 0 6px rgba(0,0,0,.08)
     }
-    .previewBox h3{
-      font-size:1.4rem;margin-bottom:12px
-    }
+    .previewBox h3{font-size:1.4rem;margin-bottom:12px}
     #preview{
       width:100%;aspect-ratio:1/1;border-radius:var(--radius);
       object-fit:contain;background:#fafafa
     }
-    /* --- PANEL ---------------------------------------------------------- */
+
+    /* --------  PANEL DERECHO  -------------------------------- */
     .panel{
       background:#fff;padding:24px;border-radius:var(--radius);
       box-shadow:0 0 6px rgba(0,0,0,.08);position:sticky;top:20px
     }
+    h2{font-size:1.8rem;margin-bottom:18px}
     .selector{
       display:flex;justify-content:space-between;margin-bottom:12px
     }
@@ -60,11 +75,11 @@
       background:var(--verde);color:#fff;padding:8px;border-radius:var(--radius);
       font-weight:600;margin-bottom:16px;text-align:center
     }
-    /* --- INPUTS & BOTONES ---------------------------------------------- */
+
+    /* --------  INPUTS & BOTONES  ------------------------------ */
     label{display:block;font-weight:600;margin:12px 0 4px}
     input[type=file],input[type=text],input[type=tel]{
-      width:100%;padding:10px;border:1px solid #ccc;border-radius:var(--radius);
-      font-size:15px
+      width:100%;padding:10px;border:1px solid #ccc;border-radius:var(--radius);font-size:15px
     }
     .btn{
       width:100%;padding:12px;border:none;border-radius:var(--radius);
@@ -81,62 +96,63 @@
 </head>
 <body>
 
-<div class="wrap">
-  <!-- ===================  PREVISUALIZACIÓN  =================== -->
-  <div class="previewBox">
-    <h3>PREVISUALIZACIÓN</h3>
-    <img id="preview" src="WhatsApp%20Image%202025-05-17%20at%2020.36.18.jpeg.png" alt="Vista previa">
-  </div>
+  <!-- =========  PORTADA  ========= -->
+  <header class="hero">
+    <button onclick="document.getElementById('pedido').scrollIntoView({behavior:'smooth'})">
+      HACER&nbsp;MI&nbsp;PEDIDO!
+    </button>
+  </header>
 
-  <!-- ===================  PANEL DERECHA  ====================== -->
-  <div class="panel">
-    <h2>ELIGE TU COMEDERO</h2>
-
-    <div class="selector" id="selector">
-      <img src="XL.png" data-size="XL" data-price="Ø22 cm · 17 €"        data-img="perro%20grande.png"   alt="Comedero XL">
-      <img src="L.png"  data-size="L"  data-price="Ø19 cm · 15 €"        data-img="perro%20mediano.png" alt="Comedero L">
-      <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €"        data-img="perro%20pequeño.png" alt="Comedero M">
-      <img src="S.png"  data-size="S"  data-price="Ø11 cm · 12 €"        data-img="gato.png"            alt="Comedero S">
+  <!-- =========  SECCIÓN PEDIDO  ========= -->
+  <main id="pedido" class="wrap">
+    <!-- --------  Previsualización  -------- -->
+    <div class="previewBox">
+      <h3>PREVISUALIZACIÓN</h3>
+      <img id="preview" src="WhatsApp%20Image%202025-05-17%20at%2020.36.18.jpeg.png" alt="Vista previa">
     </div>
 
-    <div id="info">Ø22 cm · 17 €</div>
+    <!-- --------  Panel derecho  -------- -->
+    <aside class="panel">
+      <h2>ELIGE TU COMEDERO</h2>
 
-    <!-- Foto original -->
-    <label>Sube tu foto original</label>
-    <input type="file" id="fotoOriginal" accept="image/*">
+      <div class="selector" id="selector">
+        <img src="XL.png" data-size="XL" data-price="Ø22 cm · 17 €" data-img="perro%20grande.png"   alt="XL">
+        <img src="L.png"  data-size="L"  data-price="Ø19 cm · 15 €" data-img="perro%20mediano.png" alt="L">
+        <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €" data-img="perro%20pequeño.png" alt="M">
+        <img src="S.png"  data-size="S"  data-price="Ø11 cm · 12 €" data-img="gato.png"            alt="S">
+      </div>
 
-    <!-- DATOS -->
-    <h3 style="margin-top:24px">Datos del pedido</h3>
-    <input type="text" id="nombre"  placeholder="Nombre completo">
-    <input type="tel"  id="telefono" placeholder="Teléfono (WhatsApp)">
+      <div id="info">Ø22 cm · 17 €</div>
 
-    <button class="btn" id="tramitar">📦 Tramitar pedido</button>
+      <!-- Foto original -->
+      <label>Sube tu foto original</label>
+      <input type="file" id="fotoOriginal" accept="image/*">
 
-    <!-- WhatsApp ayuda -->
-    <div class="whatsappBox">
-      ¿Tienes alguna duda o no puedes hacer tu diseño?<br>
-      Escríbeme por WhatsApp y lo haremos nosotros.<br>
-      <a class="waBtn" href="https://wa.me/34679285964" target="_blank">🟢 WhatsApp</a>
-    </div>
-  </div>
-</div>
+      <!-- Datos -->
+      <h3 style="margin-top:24px">Datos del pedido</h3>
+      <input type="text" id="nombre"  placeholder="Nombre completo">
+      <input type="tel"  id="telefono" placeholder="Teléfono (WhatsApp)">
+
+      <button class="btn" id="tramitar">📦 Tramitar pedido</button>
+
+      <!-- WhatsApp ayuda -->
+      <div class="whatsappBox">
+        ¿Tienes alguna duda o no puedes hacer tu diseño?<br>
+        Escríbeme por WhatsApp y lo haremos nosotros.<br>
+        <a class="waBtn" href="https://wa.me/34679285964" target="_blank">🟢 WhatsApp</a>
+      </div>
+    </aside>
+  </main>
 
 <script>
-/* ---------  PREVISUALIZACIÓN Y SELECTOR  --------- */
-const preview   = document.getElementById('preview');
-const selector  = document.getElementById('selector');
-const info      = document.getElementById('info');
+/* ---------- Selector y preview ---------- */
+const preview  = document.getElementById('preview');
+const selector = document.getElementById('selector');
+const info     = document.getElementById('info');
 
-let selected = {
-  size : 'XL',
-  price: 'Ø22 cm · 17 €',
-  img  : 'perro%20grande.png'
-};
-
-/* marcar XL como activo por defecto */
+let selected = {size:'XL',price:'Ø22 cm · 17 €',img:'perro%20grande.png'};
 selector.firstElementChild.classList.add('activo');
 
-/* cambiar preview al elegir comedero */
 selector.onclick = e=>{
   if(e.target.tagName!=='IMG') return;
   [...selector.children].forEach(i=>i.classList.remove('activo'));
@@ -150,15 +166,12 @@ selector.onclick = e=>{
   preview.src      = selected.img;
 };
 
-/* --- Tramitar pedido -------------------------------------------------- */
+/* ---------- Tramitar pedido (email vía Netlify Function) ---------- */
 document.getElementById('tramitar').onclick = async ()=>{
   const nombre = document.getElementById('nombre').value.trim();
   const tel    = document.getElementById('telefono').value.trim();
+  if(!nombre || !tel){alert('Rellena nombre y teléfono');return;}
 
-  if(!nombre || !tel){
-    alert('Rellena nombre y teléfono');
-    return;
-  }
   const body = { nombre, telefono:tel, size:selected.size };
 
   try{
@@ -168,7 +181,7 @@ document.getElementById('tramitar').onclick = async ()=>{
       body:JSON.stringify(body)
     });
     if(res.ok){
-      alert('¡Pedido recibido! Revisa tu WhatsApp, te enviaremos el boceto final.');
+      alert('¡Pedido recibido! Te contactaremos por WhatsApp para confirmar el diseño.');
     }else{
       alert('Error al enviar pedido');
     }
