@@ -3,7 +3,6 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_KEY);
 
 exports.handler = async (event) => {
-  // Aceptamos solo POST
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -23,9 +22,9 @@ exports.handler = async (event) => {
     `;
 
     await sgMail.send({
-      to: 'davidvaquero04@gmail.com',   // ← tu correo de destino
-      from: 'pedidos@disenopeludo.com', // remitente (o el mismo que verificaste)
-      subject: \`Nuevo pedido de \${nombre}\`,
+      to: 'davidvaquero04@gmail.com',   // Tu correo destino
+      from: 'davidvaquero94@gmail.com', // Remitente verificado en SendGrid
+      subject: `Nuevo pedido de ${nombre}`,
       html
     });
 
