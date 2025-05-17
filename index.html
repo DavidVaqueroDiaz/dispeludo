@@ -23,7 +23,7 @@
       padding:20px;
     }
     h2{font-size:1.7rem;margin-bottom:16px}
-    /* --- GRID LAYOUT --------------------------------------------------- */
+    /* --- GRID ----------------------------------------------------------- */
     .wrap{
       max-width:1200px;margin:auto;display:grid;gap:24px;
       grid-template-columns:minmax(0,1fr) 360px;
@@ -43,7 +43,7 @@
       width:100%;aspect-ratio:1/1;border-radius:var(--radius);
       object-fit:contain;background:#fafafa
     }
-    /* --- PANEL DERECHA -------------------------------------------------- */
+    /* --- PANEL ---------------------------------------------------------- */
     .panel{
       background:#fff;padding:24px;border-radius:var(--radius);
       box-shadow:0 0 6px rgba(0,0,0,.08);position:sticky;top:20px
@@ -72,9 +72,6 @@
       background:var(--verde);margin-top:14px
     }
     .btn:hover{filter:brightness(.95)}
-    details{margin-top:10px;border:1px solid #f7dcb5;background:#fff8ed;border-radius:var(--radius);padding:12px}
-    summary{cursor:pointer;font-weight:600;margin:-12px -12px 8px -12px;padding:12px}
-    summary::-webkit-details-marker{display:none}
     .whatsappBox{margin-top:28px;text-align:center;font-size:14px}
     .waBtn{
       display:inline-block;margin-top:8px;padding:10px 28px;background:var(--verde);
@@ -98,33 +95,15 @@
     <div class="selector" id="selector">
       <img src="XL.png" data-size="XL" data-price="Ø22 cm · 17 €"        data-img="perro%20grande.png"   alt="Comedero XL">
       <img src="L.png"  data-size="L"  data-price="Ø19 cm · 15 €"        data-img="perro%20mediano.png" alt="Comedero L">
-      <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €"        data-img="perro%20pequeno.png" alt="Comedero M">
+      <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €"        data-img="perro%20pequeño.png" alt="Comedero M">
       <img src="S.png"  data-size="S"  data-price="Ø11 cm · 12 €"        data-img="gato.png"            alt="Comedero S">
     </div>
 
     <div id="info">Ø22 cm · 17 €</div>
 
-    <!-- 1. Foto original -->
-    <label>1️⃣ Sube tu foto original</label>
+    <!-- Foto original -->
+    <label>Sube tu foto original</label>
     <input type="file" id="fotoOriginal" accept="image/*">
-
-    <!-- Guía -->
-    <details>
-      <summary>📑 Guía para la ilustración con IA</summary>
-      <p style="font-size:14px;line-height:1.4">
-        1. Pulsa el botón <b>Generar diseño con IA</b>.<br>
-        2. Elige un estilo (<i>Minimalista</i>, <i>Detallado</i>, <i>Solo la cabeza</i>).<br>
-        3. Sube tu foto y descarga la ilustración.<br>
-        4. Vuelve aquí y adjunta el archivo en el paso 2.<br>
-        5. ¡Previsualiza y tramita tu pedido!
-      </p>
-    </details>
-
-    <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
-
-    <!-- 2. Ilustración IA -->
-    <label>2️⃣ Ilustración generada (PNG/SVG)</label>
-    <input type="file" id="fotoIA" accept=".png,.svg">
 
     <!-- DATOS -->
     <h3 style="margin-top:24px">Datos del pedido</h3>
@@ -169,11 +148,6 @@ selector.onclick = e=>{
 
   info.textContent = selected.price;
   preview.src      = selected.img;
-};
-
-/* --- botón IA (abre tu GPT en nueva pestaña) --- */
-document.getElementById('btnIA').onclick=()=>{
-  window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
 };
 
 /* --- Tramitar pedido -------------------------------------------------- */
