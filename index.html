@@ -9,20 +9,25 @@
   body{font-family:sans-serif;margin:0;padding:20px;background:#fff8f0;text-align:center}
   .logo{max-width:180px;margin:10px auto}
 
+  /* selector tamaños */
   .selector{display:flex;justify-content:center;gap:10px;margin:20px 0}
   .selector img{width:80px;height:80px;object-fit:contain;border:2px solid #ccc;border-radius:8px;cursor:pointer;transition:.2s}
   .selector img.activo{border-color:#25d366}
 
+  /* vista previa */
   #preview{position:relative;width:350px;height:350px;margin:0 auto;overflow:hidden}
   #preview img{width:100%;height:100%;object-fit:contain}
+
   #grabado{
     position:absolute;top:0;left:0;width:100%;height:100%;
-    object-fit:contain;opacity:.7;pointer-events:none;
-    display:none;                   /* 🔸 oculto mientras no haya foto */
+    object-fit:contain;opacity:.7;pointer-events:none;display:none;
   }
 
-  .info-hover{display:none;position:absolute;bottom:0;left:0;width:100%;background:rgba(0,0,0,.7);color:#fff;padding:6px;font-size:14px}
-  #preview:hover .info-hover{display:block}
+  /* caja de info visible siempre */
+  #info{
+    width:350px;margin:8px auto 16px auto;
+    background:#444;color:#fff;padding:6px;font-size:14px;border-radius:4px;
+  }
 
   input,button{font-size:16px;padding:10px;border-radius:8px;border:1px solid #ccc;margin:8px auto;display:block;width:90%;max-width:350px}
   .btn{background:#25d366;color:#fff;border:none;font-weight:bold;cursor:pointer}
@@ -45,9 +50,10 @@
 
 <div id="preview">
   <img id="cuencoBase" src="S.png" alt="Vista previa">
-  <img id="grabado" src="" alt="">
-  <div class="info-hover" id="info"></div>
+  <img id="grabado"   src=""    alt="">
 </div>
+
+<div id="info"></div>
 
 <input type="file" id="foto" accept="image/*">
 
@@ -66,6 +72,8 @@
 
 <script>
 let selectedSize='S';
+let fotoCargada=false;
+
 const selector   = document.getElementById('selector');
 const cuencoBase = document.getElementById('cuencoBase');
 const grabado    = document.getElementById('grabado');
@@ -78,24 +86,29 @@ selector.onclick = e=>{
  e.target.classList.add('activo');
  selectedSize   = e.target.dataset.size;
  cuencoBase.src = e.target.src;
+ if(!fotoCargada) cuencoBase.style.display='block';  // solo si no hay foto
  infoBox.textContent = `${e.target.dataset.dim} · ${e.target.dataset.price}`;
 };
+
+/* valor inicial */
 selector.firstElementChild.classList.add('activo');
 infoBox.textContent = 'Ø15 cm · 6 cm alto · 20 €';
 
-/* --- subida de imagen + overlay --- */
+/* --- subida de imagen --- */
 document.getElementById('foto').onchange = e=>{
  const file = e.target.files[0];
  if(!file) return;
  const reader = new FileReader();
  reader.onload = ev=>{
    grabado.src = ev.target.result;
-   grabado.style.display = 'block';       /* 🔸 mostrar overlay */
+   grabado.style.display='block';
+   cuencoBase.style.display='none';     // 🔸 ocultar cuenco base
+   fotoCargada=true;
  };
  reader.readAsDataURL(file);
 };
 
-/* --- botón IA (provisional) --- */
+/* --- botón IA provisional --- */
 document.getElementById('btnIA').onclick = ()=>{
  const file = document.getElementById('foto').files[0];
  if(!file) return alert('Sube una imagen primero');
