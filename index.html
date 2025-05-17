@@ -26,37 +26,29 @@ img{max-width:100%;display:block}
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   max-width:1300px;margin:0 auto;
 }
-
-/* -------- paneles -------- */
 .panel{
   background:var(--card);border:1px solid var(--border);
   border-radius:18px;padding:24px;box-shadow:var(--shadow)
 }
-
-/* -------- preview izquierda -------- */
 #preview{position:relative;width:100%;padding-top:100%;border:1px solid var(--border);
   border-radius:12px;overflow:hidden;margin-top:8px}
 #preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 #grabado{opacity:.78;pointer-events:none;display:none}
 
-/* -------- selector -------- */
 .selector{display:flex;justify-content:center;gap:14px;margin:18px 0}
 .selector img{width:75px;height:75px;object-fit:contain;border:2px solid var(--border);
   border-radius:10px;cursor:pointer;transition:.25s}
 .selector img:hover{transform:translateY(-3px)}
 .selector img.activo{border-color:var(--brand)}
 
-/* info precios */
 #info{background:var(--brand-dark);color:#fff;font-weight:500;text-align:center;
   padding:6px 10px;border-radius:6px;margin:10px 0}
 
-/* -------- IA Guía -------- */
 details{border:1px solid var(--border);border-radius:12px;background:#fff8e9;margin:14px 0}
 summary{cursor:pointer;padding:12px;font-weight:600}
 details[open]{box-shadow:var(--shadow)}
 details div{padding:0 14px 16px;font-size:14px;line-height:1.35}
 
-/* inputs & botones */
 label{font-weight:600;margin-top:16px;display:block}
 input[type=file],input[type=text],input[type=tel],button,.btn-link{
   width:100%;max-width:400px;font-size:15px;padding:11px 12px;border-radius:10px;
@@ -74,7 +66,6 @@ button.btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
 .btn-link:hover{background:var(--brand-dark);transform:translateY(-2px)}
 small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
 
-/* vector preview */
 .vector-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:18px;background:#fff}
 .vector-box img{max-height:180px;margin:0 auto}
 
@@ -87,20 +78,19 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
 
 <div class="wrapper">
 
-  <!-- ----------  Columna Izquierda : Previsualización ---------- -->
+  <!-- PREVISUALIZACIÓN -->
   <div class="panel">
     <h2>PREVISUALIZACIÓN</h2>
 
     <div id="preview">
-      <img id="cuencoBase" src="S.png" alt="Vista previa">
-      <img id="grabado"   src=""    alt="">
+      <img id="cuencoBase" src="S.png" style="display:none" alt="Cuenco base">
+      <img id="grabado"   src="" alt="Grabado/Ilustración">
     </div>
   </div>
 
-  <!-- ----------  Columna Derecha : Flujo completo ---------- -->
+  <!-- LADO DERECHO -->
   <div class="panel">
 
-    <!-- Selector -->
     <h2>ELIGE TU COMEDERO</h2>
     <div class="selector" id="selector">
       <img src="XL.png" data-size="XL" data-diam="22" data-price="17" alt="XL">
@@ -110,16 +100,15 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
     </div>
     <div id="info"></div>
 
-    <!-- Foto original -->
+    <!-- foto original -->
     <label>1️⃣ Sube tu foto original</label>
     <input type="file" id="foto" accept="image/*">
 
-    <!-- Guía IA -->
+    <!-- guía IA -->
     <details>
       <summary>📋 Guía para la ilustración con IA</summary>
       <div>
-        1️⃣ Elige un estilo:<br>
-        &nbsp;&nbsp;• <b>Minimalista</b>&nbsp;• <b>Detallado</b>&nbsp;• <b>Solo la cabeza</b><br><br>
+        1️⃣ Elige <b>Minimalista</b>, <b>Detallado</b> o <b>Solo la cabeza</b>.<br>
         2️⃣ Adjunta la foto en el chat.<br>
         3️⃣ Descarga la imagen <b>PNG o SVG</b>.<br>
         4️⃣ Súbela abajo en “Ilustración generada”.
@@ -128,20 +117,20 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
 
     <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
 
+    <!-- vector IA -->
     <label>2️⃣ Ilustración generada (PNG/SVG)</label>
     <input type="file" id="diseño" accept=".png,.svg,image/*">
-
     <div class="vector-box" id="vectorPreview" style="display:none">
       <img id="vectorImg" src="" alt="Vector Preview">
     </div>
 
-    <!-- Datos -->
+    <!-- datos -->
     <h3 style="margin-top:26px">Datos del pedido</h3>
     <input id="nombre"  placeholder="Nombre completo" type="text">
     <input id="telefono" placeholder="Teléfono (WhatsApp)" type="tel">
     <button class="btn" id="tramitar">📦 Tramitar pedido</button>
 
-    <!-- Ayuda WhatsApp -->
+    <!-- whatsapp ayuda -->
     <p style="margin:22px 0 6px;font-size:15px">
       ¿Tienes alguna duda o no puedes hacer tu diseño?<br>
       Escríbeme por WhatsApp y lo haremos nosotros.
@@ -153,63 +142,70 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
 </div>
 
 <script>
-/* ---------- variables ---------- */
-let selectedSize = 'S', fotoCargada = false;
-const $ = id => document.getElementById(id);
-const selector = $('selector'), cuencoBase = $('cuencoBase'), grabado = $('grabado');
-const infoBox = $('info'), fileInput = $('foto'), designInput = $('diseño');
-const vectorBox = $('vectorPreview'), vectorImg = $('vectorImg');
+let selectedSize='S', fotoCargada=false, vectorCargado=false;
+const $=id=>document.getElementById(id);
+const selector=$('selector'), cuencoBase=$('cuencoBase'), grabado=$('grabado');
+const infoBox=$('info'), fotoInput=$('foto'), vecInput=$('diseño');
+const vecBox=$('vectorPreview'), vecImg=$('vectorImg');
 
-/* -------- imagen de ejemplo -------- */
-grabado.src = 'WhatsApp%20Image%202025-05-17%20at%2020.36.18.jpeg';   // archivo que subiste
-grabado.style.display = 'block';
+/* imagen de muestra */
+grabado.src='WhatsApp%20Image%202025-05-17%20at%2020.36.18.jpeg.png';
+grabado.style.display='block';
 
-/* selector */
-selector.onclick = e=>{
+/* selector tamaño */
+selector.onclick=e=>{
   if(e.target.tagName!=='IMG')return;
   [...selector.children].forEach(i=>i.classList.remove('activo'));
   e.target.classList.add('activo');
   selectedSize=e.target.dataset.size;
-  cuencoBase.src=e.target.src;
-  if(!fotoCargada)cuencoBase.style.display='block';
   infoBox.textContent=`Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
+
+  /* solo enseñamos el cuenco si no hay foto ni vector */
+  if(!fotoCargada && !vectorCargado){
+    cuencoBase.src=e.target.src;
+    cuencoBase.style.display='block';
+    grabado.style.display='none';
+  }
 };
 selector.children[3].classList.add('activo');
 infoBox.textContent='Ø11 cm · 12 €';
 
-/* preview foto mascota */
-fileInput.onchange=e=>{
+/* foto mascota */
+fotoInput.onchange=e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
   r.onload=ev=>{
-    grabado.src=ev.target.result;grabado.style.display='block';
-    cuencoBase.style.display='none';fotoCargada=true;
+    grabado.src=ev.target.result;
+    grabado.style.display='block';
+    cuencoBase.style.display='none';
+    fotoCargada=true;
   };r.readAsDataURL(f);
 };
 
-/* preview vector IA */
-designInput.onchange=e=>{
+/* vector IA */
+vecInput.onchange=e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
   r.onload=ev=>{
-    vectorImg.src=ev.target.result;vectorBox.style.display='block';
+    vecImg.src=ev.target.result;vecBox.style.display='block';
+    vectorCargado=true;
   };r.readAsDataURL(f);
 };
 
-/* botón IA */
+/* Abrir GPT */
 $('btnIA').onclick=()=>{
-  if(!fileInput.files.length)return alert('Primero sube la foto original');
+  if(!fotoInput.files.length)return alert('Primero sube la foto original');
   window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
 };
 
-/* tramitar */
+/* Tramitar */
 $('tramitar').onclick=async()=>{
   const nombre=$('nombre').value.trim(), tel=$('telefono').value.trim();
   if(!nombre||!tel)return alert('Rellena nombre y teléfono');
 
   const toB64=f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f);});
-  const imageData=fileInput.files.length?await toB64(fileInput.files[0]):null;
-  const designData=designInput.files.length?await toB64(designInput.files[0]):null;
+  const imageData=fotoInput.files[0]?await toB64(fotoInput.files[0]):null;
+  const designData=vecInput.files[0]?await toB64(vecInput.files[0]):null;
 
   try{
     const res=await fetch('/.netlify/functions/tramitar',{
@@ -221,7 +217,5 @@ $('tramitar').onclick=async()=>{
   }catch{alert('Error de conexión');}
 };
 </script>
-
 </body>
 </html>
-
