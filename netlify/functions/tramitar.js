@@ -23,7 +23,7 @@ exports.handler = async (event) => {
 
 
     await sgMail.send({
-      to: 'davidvaquero04@gmail.com',   // Tu correo destino
+      to: 'davidvaquero94@gmail.com',   // Tu correo destino
       from: 'davidvaquero94@gmail.com', // Remitente verificado en SendGrid
       subject: `Nuevo pedido de ${nombre}`,
       html
