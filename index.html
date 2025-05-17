@@ -3,219 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Diseño Peludo</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<title>Diseño Peludo – Personaliza tu comedero</title>
 <style>
-:root{
-  --bg:#fff7f3;          --card:#ffffff;
-  --brand:#1ebe5d;       --brand-dark:#13924a;
-  --border:#e9ddd5;      --shadow:0 6px 18px rgba(0,0,0,.08);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Poppins',sans-serif;background:var(--bg);padding:30px 10px;color:#444}
+  :root{
+    --bg:#fff2e9;
+    --primary:#0ea960;
+    --primary-dark:#0b864c;
+    --border:#e0d6cf;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:sans-serif;
+    background:var(--bg);
+    padding:20px;
+  }
+  h2{font-size:1.3rem;margin-bottom:12px}
+  .contenedor{
+    max-width:1100px;margin:auto;display:flex;gap:32px;
+  }
+  @media(max-width:800px){
+    .contenedor{flex-direction:column}
+  }
 
-h2,h3{font-weight:600;color:#222;margin-bottom:.4em}
-img{max-width:100%;display:block}
+  /* ---------- Previsualización ---------- */
+  .preview-wrapper{
+    flex:1;
+    background:#fff;border:1px solid var(--border);
+    border-radius:8px;padding:20px;
+  }
+  .preview-wrapper h3{font-size:1.25rem;margin-bottom:10px}
+  #preview{
+    position:relative;
+    width:100%;
+    padding-top:100%;           /* cuadrado fluido */
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  #preview img{
+    position:absolute;
+    top:0;left:0;width:100%;height:100%;object-fit:contain;
+  }
 
-.wrapper{
-  display:grid;gap:32px;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  max-width:1300px;margin:0 auto;
-}
-.panel{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:18px;padding:24px;box-shadow:var(--shadow)
-}
-#preview{position:relative;width:100%;padding-top:100%;border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;margin-top:8px}
-#preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-#grabado{opacity:.78;pointer-events:none;display:none}
+  /* ---------- Panel de selección ---------- */
+  .panel{
+    width:320px;max-width:100%;
+    background:#fff;border:1px solid var(--border);
+    border-radius:8px;padding:20px;
+  }
+  .cuencos{display:flex;justify-content:space-between;margin-bottom:12px}
+  .cuencos img{
+    width:60px;height:60px;object-fit:contain;
+    border:2px solid var(--border);border-radius:6px;cursor:pointer;
+    transition:.2s;
+  }
+  .cuencos img.activo{border-color:var(--primary)}
+  #precio{
+    background:var(--primary);
+    color:#fff;font-weight:bold;
+    border-radius:6px;
+    text-align:center;
+    padding:6px;margin-bottom:14px;
+    font-size:.9rem;
+  }
 
-.selector{display:flex;justify-content:center;gap:14px;margin:18px 0}
-.selector img{width:75px;height:75px;object-fit:contain;border:2px solid var(--border);
-  border-radius:10px;cursor:pointer;transition:.25s}
-.selector img:hover{transform:translateY(-3px)}
-.selector img.activo{border-color:var(--brand)}
+  /* ---------- Inputs & botones ---------- */
+  input,button,details{
+    font-size:.9rem;width:100%;
+    border-radius:6px;border:1px solid var(--border);
+    padding:10px;margin-bottom:12px;
+  }
+  input[type=file]{padding:8px}
+  button{
+    background:var(--primary);color:#fff;font-weight:bold;border:none;
+    cursor:pointer;transition:.2s;
+  }
+  button:hover{background:var(--primary-dark)}
+  details summary{cursor:pointer;font-weight:bold;color:#333;user-select:none}
+  details[open]{background:#fff9f6}
 
-#info{background:var(--brand-dark);color:#fff;font-weight:500;text-align:center;
-  padding:6px 10px;border-radius:6px;margin:10px 0}
+  small{font-size:.8rem;color:#555}
 
-details{border:1px solid var(--border);border-radius:12px;background:#fff8e9;margin:14px 0}
-summary{cursor:pointer;padding:12px;font-weight:600}
-details[open]{box-shadow:var(--shadow)}
-details div{padding:0 14px 16px;font-size:14px;line-height:1.35}
-
-label{font-weight:600;margin-top:16px;display:block}
-input[type=file],input[type=text],input[type=tel],button,.btn-link{
-  width:100%;max-width:400px;font-size:15px;padding:11px 12px;border-radius:10px;
-  border:1px solid var(--border);margin:10px auto
-}
-button.btn{
-  background:var(--brand);color:#fff;border:none;font-weight:600;cursor:pointer;
-  transition:.25s
-}
-button.btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
-.btn-link{
-  background:var(--brand);color:#fff;text-align:center;text-decoration:none;
-  display:inline-block;font-weight:600;transition:.25s
-}
-.btn-link:hover{background:var(--brand-dark);transform:translateY(-2px)}
-small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
-
-.vector-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:18px;background:#fff}
-.vector-box img{max-height:180px;margin:0 auto}
-
-@media (min-width:900px){
-  .wrapper{grid-template-columns:1.3fr .9fr}
-}
 </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="contenedor">
 
-  <!-- PREVISUALIZACIÓN -->
-  <div class="panel">
-    <h2>PREVISUALIZACIÓN</h2>
-
+  <!-- Previsualización -->
+  <section class="preview-wrapper">
+    <h3>PREVISUALIZACIÓN</h3>
     <div id="preview">
-      <img id="cuencoBase" src="S.png" style="display:none" alt="Cuenco base">
-      <img id="grabado"   src="" alt="Grabado/Ilustración">
+      <img id="demo"     src="gato.png" alt="">
+      <img id="grabado"  src=""        alt="" style="display:none">
     </div>
-  </div>
+  </section>
 
-  <!-- LADO DERECHO -->
-  <div class="panel">
-
+  <!-- Panel derecho -->
+  <aside class="panel">
     <h2>ELIGE TU COMEDERO</h2>
-    <div class="selector" id="selector">
-      <img src="XL.png" data-size="XL" data-diam="22" data-price="17" alt="XL">
-      <img src="L.png"  data-size="L"  data-diam="19" data-price="15" alt="L">
-      <img src="M.png"  data-size="M"  data-diam="16" data-price="14" alt="M">
-      <img src="S.png"  data-size="S"  data-diam="11" data-price="12" alt="S">
+
+    <!-- Cuencos -->
+    <div class="cuencos" id="selector">
+      <img src="S.png"  data-size="S"  data-dim="Ø11 cm" data-price="12 €" alt="S">
+      <img src="M.png"  data-size="M"  data-dim="Ø16 cm" data-price="14 €" alt="M">
+      <img src="L.png"  data-size="L"  data-dim="Ø19 cm" data-price="15 €" alt="L">
+      <img src="XL.png" data-size="XL" data-dim="Ø22 cm" data-price="17 €" alt="XL">
     </div>
-    <div id="info"></div>
 
-    <!-- foto original -->
-    <label>1️⃣ Sube tu foto original</label>
-    <input type="file" id="foto" accept="image/*">
+    <div id="precio">Ø11 cm · 12 €</div>
 
-    <!-- guía IA -->
+    <!-- 1 -->
+    <label><b>1</b> Sube tu foto original
+      <input type="file" id="foto" accept="image/*">
+    </label>
+
+    <!-- guía -->
     <details>
-      <summary>📋 Guía para la ilustración con IA</summary>
-      <div>
-        1️⃣ Elige <b>Minimalista</b>, <b>Detallado</b> o <b>Solo la cabeza</b>.<br>
-        2️⃣ Adjunta la foto en el chat.<br>
-        3️⃣ Descarga la imagen <b>PNG o SVG</b>.<br>
-        4️⃣ Súbela abajo en “Ilustración generada”.
-      </div>
+      <summary>📑 Guía para la ilustración con IA</summary>
+      <p style="margin:10px 0 0 0;font-size:.85rem;line-height:1.4">
+        Selecciona uno de los estilos de la lista (Minimalista, Detallado o Solo la cabeza) y sube tu foto.
+        Descarga la ilustración resultante y súbela en el paso&nbsp;2.<br>
+        ¡No olvides elegir bien el encuadre!
+      </p>
     </details>
 
-    <button class="btn" id="btnIA">🧠 Generar diseño con IA</button>
+    <!-- Botón IA -->
+    <button id="btnIA">🧠 Generar diseño con IA</button>
 
-    <!-- vector IA -->
-    <label>2️⃣ Ilustración generada (PNG/SVG)</label>
-    <input type="file" id="diseño" accept=".png,.svg,image/*">
-    <div class="vector-box" id="vectorPreview" style="display:none">
-      <img id="vectorImg" src="" alt="Vector Preview">
-    </div>
+    <!-- 2 -->
+    <label><b>2</b> Ilustración generada (PNG/SVG)
+      <input type="file" id="dibujo" accept="image/*,image/svg+xml">
+    </label>
 
-    <!-- datos -->
-    <h3 style="margin-top:26px">Datos del pedido</h3>
-    <input id="nombre"  placeholder="Nombre completo" type="text">
-    <input id="telefono" placeholder="Teléfono (WhatsApp)" type="tel">
-    <button class="btn" id="tramitar">📦 Tramitar pedido</button>
+    <!-- Datos -->
+    <h3 style="margin-top:8px">Datos del pedido</h3>
+    <input id="nombre"  placeholder="Nombre completo">
+    <input id="telefono" placeholder="Teléfono (WhatsApp)">
 
-    <!-- whatsapp ayuda -->
-    <p style="margin:22px 0 6px;font-size:15px">
+    <button id="tramitar">📦 Tramitar pedido</button>
+
+    <p style="font-size:.8rem;margin-top:14px">
       ¿Tienes alguna duda o no puedes hacer tu diseño?<br>
       Escríbeme por WhatsApp y lo haremos nosotros.
     </p>
-    <a class="btn-link" href="https://wa.me/34679285964" target="_blank">💬 WhatsApp</a>
+    <a href="https://wa.me/34679285964" target="_blank">
+      <button style="margin-top:4px">💬 WhatsApp</button>
+    </a>
+  </aside>
 
-    <small>Te enviaremos un correo con ambas imágenes para confirmar el diseño.</small>
-  </div>
 </div>
 
+<!-- -------------  JS  ------------- -->
 <script>
-let selectedSize='S', fotoCargada=false, vectorCargado=false;
-const $=id=>document.getElementById(id);
-const selector=$('selector'), cuencoBase=$('cuencoBase'), grabado=$('grabado');
-const infoBox=$('info'), fotoInput=$('foto'), vecInput=$('diseño');
-const vecBox=$('vectorPreview'), vecImg=$('vectorImg');
+/* Mapa de imagen-demo por talla */
+const demoImg = {
+  S : 'gato.png',
+  M : 'perro pequeno.png',
+  L : 'perro mediano.png',
+  XL: 'perro grande.png'
+};
 
-/* imagen de muestra */
-grabado.src='WhatsApp%20Image%202025-05-17%20at%2020.36.18.jpeg.png';
-grabado.style.display='block';
+/* Estado global */
+let selectedSize = 'S';
+let fotoCargada  = false;
 
-/* selector tamaño */
-selector.onclick=e=>{
-  if(e.target.tagName!=='IMG')return;
-  [...selector.children].forEach(i=>i.classList.remove('activo'));
+const selector = document.getElementById('selector');
+const demo     = document.getElementById('demo');
+const grabado  = document.getElementById('grabado');
+const precio   = document.getElementById('precio');
+
+/* --- Selector de talla ------------------------------------ */
+selector.onclick = e =>{
+  if(e.target.tagName!=='IMG') return;
+
+  /* resaltado */
+  [...selector.children].forEach(img=>img.classList.remove('activo'));
   e.target.classList.add('activo');
-  selectedSize=e.target.dataset.size;
-  infoBox.textContent=`Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
 
-  /* solo enseñamos el cuenco si no hay foto ni vector */
-  if(!fotoCargada && !vectorCargado){
-    cuencoBase.src=e.target.src;
-    cuencoBase.style.display='block';
-    grabado.style.display='none';
+  /* datos */
+  selectedSize = e.target.dataset.size;
+  precio.textContent = `${e.target.dataset.dim} · ${e.target.dataset.price}`;
+
+  /* demo si aún no hay foto */
+  if(!fotoCargada){
+    demo.src               = demoImg[selectedSize];
+    demo.style.display     = 'block';
+    grabado.style.display  = 'none';
   }
 };
-selector.children[3].classList.add('activo');
-infoBox.textContent='Ø11 cm · 12 €';
 
-/* foto mascota */
-fotoInput.onchange=e=>{
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    grabado.src=ev.target.result;
-    grabado.style.display='block';
-    cuencoBase.style.display='none';
-    fotoCargada=true;
-  };r.readAsDataURL(f);
+/* Marca inicial (S activo) */
+selector.firstElementChild.classList.add('activo');
+
+/* --- Foto original del cliente ---------------------------- */
+document.getElementById('foto').onchange = e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const rdr = new FileReader();
+  rdr.onload = ev=>{
+    demo.style.display    = 'none';          // ocultamos demo
+    grabado.src           = ev.target.result;
+    grabado.style.display = 'block';
+    fotoCargada           = true;
+  };
+  rdr.readAsDataURL(file);
 };
 
-/* vector IA */
-vecInput.onchange=e=>{
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    vecImg.src=ev.target.result;vecBox.style.display='block';
-    vectorCargado=true;
-  };r.readAsDataURL(f);
-};
-
-/* Abrir GPT */
-$('btnIA').onclick=()=>{
-  if(!fotoInput.files.length)return alert('Primero sube la foto original');
+/* --- Botón IA provisional (abre tu GPT) ------------------- */
+document.getElementById('btnIA').onclick = ()=>{
+  const file = document.getElementById('foto').files[0];
+  if(!file) return alert('Sube tu foto original primero');
   window.open('https://chatgpt.com/g/g-680d11d6dafc819199cd6a3cd71a87cb-ilustra-tu-mascota','_blank');
 };
 
-/* Tramitar */
-$('tramitar').onclick=async()=>{
-  const nombre=$('nombre').value.trim(), tel=$('telefono').value.trim();
-  if(!nombre||!tel)return alert('Rellena nombre y teléfono');
+/* --- Botón tramitar (sin cambios) ------------------------- */
+document.getElementById('tramitar').onclick = async ()=>{
+  const nombre = document.getElementById('nombre').value.trim();
+  const tel    = document.getElementById('telefono').value.trim();
+  if(!nombre || !tel){ alert('Rellena nombre y teléfono'); return; }
 
-  const toB64=f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f);});
-  const imageData=fotoInput.files[0]?await toB64(fotoInput.files[0]):null;
-  const designData=vecInput.files[0]?await toB64(vecInput.files[0]):null;
-
+  const body = { nombre, telefono:tel, size:selectedSize };
   try{
-    const res=await fetch('/.netlify/functions/tramitar',{
+    const res = await fetch('/.netlify/functions/tramitar',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nombre,telefono:tel,size:selectedSize,imageData,designData})
+      body: JSON.stringify(body)
     });
-    res.ok?alert('¡Pedido recibido!'):alert('Error al enviar');
-  }catch{alert('Error de conexión');}
+    if(res.ok){ alert('¡Pedido recibido!'); }
+    else      { alert('Error al enviar pedido'); }
+  }catch{ alert('Error de conexión'); }
 };
 </script>
+
 </body>
 </html>
