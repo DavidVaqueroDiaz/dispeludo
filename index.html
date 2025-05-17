@@ -19,20 +19,19 @@
     .hero{
       height:100vh;width:100%;
       background:url("Diseño%20sin%20título%20(25).png") center/cover no-repeat;
-      display:flex;align-items:center;justify-content:center;
       position:relative;
     }
-    .hero::after{          /* leve overlay para legibilidad */
-      content:"";position:absolute;inset:0;
-      background:rgba(0,0,0,.35);
+    .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35)}  /* overlay */
+
+    .heroBtnWrap{
+      position:absolute;top:40px;left:50%;transform:translateX(-50%);
+      display:flex;align-items:center;gap:14px;z-index:2;
     }
+    .arrow{font-size:34px;color:#fff;line-height:1}
     .hero button{
-      position:relative;           /* sobre el overlay */
-      padding:18px 36px;font-size:1.4rem;
-      background:var(--verde);color:#fff;border:none;
-      border-radius:var(--radius);cursor:pointer;
-      font-weight:700;letter-spacing:.5px;
-      box-shadow:0 4px 10px rgba(0,0,0,.2);
+      padding:18px 36px;font-size:1.2rem;font-weight:700;
+      background:var(--verde);color:#fff;border:none;border-radius:var(--radius);
+      cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 10px rgba(0,0,0,.25);
       transition:.2s;
     }
     .hero button:hover{transform:translateY(-3px)}
@@ -98,9 +97,13 @@
 
   <!-- =========  PORTADA  ========= -->
   <header class="hero">
-    <button onclick="document.getElementById('pedido').scrollIntoView({behavior:'smooth'})">
-      HACER&nbsp;MI&nbsp;PEDIDO!
-    </button>
+    <div class="heroBtnWrap">
+      <span class="arrow">⬇</span>
+      <button onclick="document.getElementById('pedido').scrollIntoView({behavior:'smooth'})">
+        HACER&nbsp;MI&nbsp;PEDIDO!
+      </button>
+      <span class="arrow">⬇</span>
+    </div>
   </header>
 
   <!-- =========  SECCIÓN PEDIDO  ========= -->
@@ -118,7 +121,7 @@
       <div class="selector" id="selector">
         <img src="XL.png" data-size="XL" data-price="Ø22 cm · 17 €" data-img="perro%20grande.png"   alt="XL">
         <img src="L.png"  data-size="L"  data-price="Ø19 cm · 15 €" data-img="perro%20mediano.png" alt="L">
-        <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €" data-img="perro%20pequeño.png" alt="M">
+        <img src="M.png"  data-size="M"  data-price="Ø16 cm · 14 €" data-img="perro%20pequeno.png" alt="M">
         <img src="S.png"  data-size="S"  data-price="Ø11 cm · 12 €" data-img="gato.png"            alt="S">
       </div>
 
