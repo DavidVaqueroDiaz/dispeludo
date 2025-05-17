@@ -8,14 +8,22 @@
   *{box-sizing:border-box}
   body{font-family:sans-serif;margin:0;padding:20px;background:#fff8f0;text-align:center}
   .logo{max-width:180px;margin:10px auto}
+
+  /* ----- selector de tamaños ----- */
   .selector{display:flex;justify-content:center;gap:10px;margin:20px 0}
   .selector img{width:80px;height:80px;object-fit:contain;border:2px solid #ccc;border-radius:8px;cursor:pointer;transition:.2s}
   .selector img.activo{border-color:#25d366}
-  #preview{position:relative;width:350px;margin:0 auto}
-  #preview img{width:100%}
-  #grabado{position:absolute;top:0;left:0;width:100%;opacity:.7;pointer-events:none}
+
+  /* ----- vista previa del cuenco ----- */
+  #preview{position:relative;width:350px;height:350px;margin:0 auto;overflow:hidden}
+  #preview img{width:100%;height:100%;object-fit:contain}
+  #grabado{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.7;pointer-events:none}
+
+  /* tooltip con dimensiones/precio */
   .info-hover{display:none;position:absolute;bottom:0;left:0;width:100%;background:rgba(0,0,0,.7);color:#fff;padding:6px;font-size:14px}
   #preview:hover .info-hover{display:block}
+
+  /* ----- campos y botones ----- */
   input,button{font-size:16px;padding:10px;border-radius:8px;border:1px solid #ccc;margin:8px auto;display:block;width:90%;max-width:350px}
   .btn{background:#25d366;color:#fff;border:none;font-weight:bold;cursor:pointer}
   .btn:hover{background:#1ebe5d}
@@ -104,12 +112,7 @@ document.getElementById('tramitar').onclick = async ()=>{
     return;
   }
 
-  const body = {
-    nombre,
-    telefono: tel,
-    size: selectedSize
-    // photo y svg se añadirán más adelante
-  };
+  const body = { nombre, telefono: tel, size: selectedSize };
 
   try{
     const res = await fetch('/.netlify/functions/tramitar',{
