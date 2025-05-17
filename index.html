@@ -11,20 +11,16 @@
 
 <style>
 :root{
-  --bg:#fff7f3;
-  --card:#ffffff;
-  --brand:#1ebe5d;
-  --brand-dark:#13924a;
-  --border:#e9ddd5;
-  --shadow:0 6px 18px rgba(0,0,0,.08);
+  --bg:#fff7f3;          --card:#ffffff;
+  --brand:#1ebe5d;       --brand-dark:#13924a;
+  --border:#e9ddd5;      --shadow:0 6px 18px rgba(0,0,0,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Poppins',sans-serif;background:var(--bg);
-  padding:30px 10px;min-height:100vh;color:#444;
-}
-h2,h3{font-weight:600;color:#222;margin-bottom:.3em}
-img{display:block;max-width:100%}
+body{font-family:'Poppins',sans-serif;background:var(--bg);padding:30px 10px;color:#444}
+
+h1{font-size:32px;margin-bottom:20px;text-align:center}
+h2,h3{font-weight:600;color:#222;margin-bottom:.4em}
+img{max-width:100%;display:block}
 
 .wrapper{
   display:grid;gap:32px;
@@ -32,26 +28,30 @@ img{display:block;max-width:100%}
   max-width:1300px;margin:0 auto;
 }
 
-/* -------- columna izquierda -------- */
+/* -------- paneles -------- */
 .panel{
   background:var(--card);border:1px solid var(--border);
   border-radius:18px;padding:24px;box-shadow:var(--shadow)
 }
-#preview{position:relative;width:100%;padding-top:100%;overflow:hidden;border-radius:12px;margin-top:8px;border:1px solid var(--border)}
+
+/* -------- preview izquierda -------- */
+#preview{position:relative;width:100%;padding-top:100%;border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;margin-top:8px}
 #preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 #grabado{opacity:.78;pointer-events:none;display:none}
 
-/* -------- selector tamaños -------- */
+/* -------- selector -------- */
 .selector{display:flex;justify-content:center;gap:14px;margin:18px 0}
-.selector img{width:75px;height:75px;object-fit:contain;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:.25s}
+.selector img{width:75px;height:75px;object-fit:contain;border:2px solid var(--border);
+  border-radius:10px;cursor:pointer;transition:.25s}
 .selector img:hover{transform:translateY(-3px)}
 .selector img.activo{border-color:var(--brand)}
 
-/* info barra */
+/* info precios */
 #info{background:var(--brand-dark);color:#fff;font-weight:500;text-align:center;
   padding:6px 10px;border-radius:6px;margin:10px 0}
 
-/* -------- módulo IA / chat -------- */
+/* -------- IA Guía -------- */
 details{border:1px solid var(--border);border-radius:12px;background:#fff8e9;margin:14px 0}
 summary{cursor:pointer;padding:12px;font-weight:600}
 details[open]{box-shadow:var(--shadow)}
@@ -63,26 +63,35 @@ input[type=file],input[type=text],input[type=tel],button,.btn-link{
   width:100%;max-width:400px;font-size:15px;padding:11px 12px;border-radius:10px;
   border:1px solid var(--border);margin:10px auto
 }
-button.btn{background:var(--brand);color:#fff;border:none;font-weight:600;cursor:pointer;transition:.25s}
+button.btn{
+  background:var(--brand);color:#fff;border:none;font-weight:600;cursor:pointer;
+  transition:.25s
+}
 button.btn:hover{background:var(--brand-dark);transform:translateY(-2px)}
-.btn-link{background:var(--brand);color:#fff;text-decoration:none;text-align:center;display:block}
+.btn-link{
+  background:var(--brand);color:#fff;text-align:center;text-decoration:none;
+  display:inline-block;font-weight:600;transition:.25s
+}
+.btn-link:hover{background:var(--brand-dark);transform:translateY(-2px)}
 small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
 
-/* -------- ilustración vector mini -------- */
+/* vector preview */
 .vector-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:18px;background:#fff}
 .vector-box img{max-height:180px;margin:0 auto}
 
 @media (min-width:900px){
-  /* mantenemos proporción 4/6 para preview vs panel derecho */
   .wrapper{grid-template-columns:1.3fr .9fr}
 }
 </style>
 </head>
 <body>
 
+<!-- ---------- Logo ---------- -->
+<h1><img src="Logo%20color.svg" alt="Logo Diseño Peludo" style="max-width:220px"></h1>
+
 <div class="wrapper">
 
-  <!-- ----------  COLUMNA IZQUIERDA  ---------- -->
+  <!-- ----------  Columna Izquierda : Previsualización ---------- -->
   <div class="panel">
     <h2>PREVISUALIZACIÓN</h2>
 
@@ -90,12 +99,9 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
       <img id="cuencoBase" src="S.png" alt="Vista previa">
       <img id="grabado"   src=""    alt="">
     </div>
-
-    <label style="margin-top:22px">1️⃣ Foto original</label>
-    <input type="file" id="foto" accept="image/*">
   </div>
 
-  <!-- ----------  COLUMNA DERECHA  ---------- -->
+  <!-- ----------  Columna Derecha : Flujo completo ---------- -->
   <div class="panel">
 
     <!-- Selector -->
@@ -108,13 +114,17 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
     </div>
     <div id="info"></div>
 
+    <!-- Foto original AHORA AQUÍ -->
+    <label>1️⃣ Sube tu foto original</label>
+    <input type="file" id="foto" accept="image/*">
+
     <!-- Guía IA -->
     <details>
       <summary>📋 Guía para la ilustración con IA</summary>
       <div>
-        1️⃣ Elige un estilo en ChatGPT:<br>
-        &nbsp;&nbsp;• <b>Minimalista</b> &nbsp;• <b>Detallado</b> &nbsp;• <b>Solo la cabeza</b><br><br>
-        2️⃣ Adjunta la foto de tu mascota en el chat.<br>
+        1️⃣ Elige un estilo:<br>
+        &nbsp;&nbsp;• <b>Minimalista</b>&nbsp;• <b>Detallado</b>&nbsp;• <b>Solo la cabeza</b><br><br>
+        2️⃣ Adjunta la foto en el chat.<br>
         3️⃣ Descarga la imagen <b>PNG o SVG</b>.<br>
         4️⃣ Súbela abajo en “Ilustración generada”.
       </div>
@@ -129,14 +139,18 @@ small{display:block;text-align:center;font-size:13px;color:#777;margin-top:10px}
       <img id="vectorImg" src="" alt="Vector Preview">
     </div>
 
-    <a class="btn-link" href="https://wa.me/34679285964?text=Hola%20quiero%20un%20comedero%20personalizado" target="_blank">
-      📱 Escríbeme por WhatsApp
-    </a>
-
+    <!-- Datos -->
     <h3 style="margin-top:26px">Datos del pedido</h3>
     <input id="nombre"  placeholder="Nombre completo" type="text">
     <input id="telefono" placeholder="Teléfono (WhatsApp)" type="tel">
     <button class="btn" id="tramitar">📦 Tramitar pedido</button>
+
+    <!-- Ayuda WhatsApp -->
+    <p style="margin:22px 0 6px;font-size:15px">
+      ¿Tienes alguna duda o no puedes hacer tu diseño?<br>
+      Escríbeme por WhatsApp y lo haremos nosotros.
+    </p>
+    <a class="btn-link" href="https://wa.me/34679285964" target="_blank">💬 WhatsApp</a>
 
     <small>Te enviaremos un correo con ambas imágenes para confirmar el diseño.</small>
   </div>
@@ -160,7 +174,7 @@ selector.onclick=e=>{
   if(!fotoCargada)cuencoBase.style.display='block';
   infoBox.textContent=`Ø${e.target.dataset.diam} cm · ${e.target.dataset.price} €`;
 };
-selector.children[3].classList.add('activo'); // S inicial
+selector.children[3].classList.add('activo');
 infoBox.textContent='Ø11 cm · 12 €';
 
 /* preview foto mascota */
