@@ -9,25 +9,15 @@
   body{font-family:sans-serif;margin:0;padding:20px;background:#fff8f0;text-align:center}
   .logo{max-width:180px;margin:10px auto}
 
-  /* selector tamaños */
   .selector{display:flex;justify-content:center;gap:10px;margin:20px 0}
   .selector img{width:80px;height:80px;object-fit:contain;border:2px solid #ccc;border-radius:8px;cursor:pointer;transition:.2s}
   .selector img.activo{border-color:#25d366}
 
-  /* vista previa */
   #preview{position:relative;width:350px;height:350px;margin:0 auto;overflow:hidden}
   #preview img{width:100%;height:100%;object-fit:contain}
+  #grabado{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:.7;pointer-events:none;display:none}
 
-  #grabado{
-    position:absolute;top:0;left:0;width:100%;height:100%;
-    object-fit:contain;opacity:.7;pointer-events:none;display:none;
-  }
-
-  /* caja de info visible siempre */
-  #info{
-    width:350px;margin:8px auto 16px auto;
-    background:#444;color:#fff;padding:6px;font-size:14px;border-radius:4px;
-  }
+  #info{width:350px;margin:8px auto 16px auto;background:#444;color:#fff;padding:6px;font-size:14px;border-radius:4px}
 
   input,button{font-size:16px;padding:10px;border-radius:8px;border:1px solid #ccc;margin:8px auto;display:block;width:90%;max-width:350px}
   .btn{background:#25d366;color:#fff;border:none;font-weight:bold;cursor:pointer}
@@ -42,10 +32,10 @@
 <h2>Sube la foto de tu mascota y elige tamaño</h2>
 
 <div class="selector" id="selector">
-  <img src="S.png"  data-size="S"  data-dim="Ø15 cm · 6 cm alto"  data-price="20 €" alt="Comedero S">
-  <img src="M.png"  data-size="M"  data-dim="Ø18 cm · 7 cm alto"  data-price="25 €" alt="Comedero M">
-  <img src="L.png"  data-size="L"  data-dim="Ø22 cm · 8 cm alto"  data-price="30 €" alt="Comedero L">
-  <img src="XL.png" data-size="XL" data-dim="Ø26 cm · 9 cm alto"  data-price="35 €" alt="Comedero XL">
+  <img src="S.png"  data-size="S"  data-dim="Ø11 cm" data-price="12 €" alt="Comedero S">
+  <img src="M.png"  data-size="M"  data-dim="Ø16 cm" data-price="14 €" alt="Comedero M">
+  <img src="L.png"  data-size="L"  data-dim="Ø19 cm" data-price="15 €" alt="Comedero L">
+  <img src="XL.png" data-size="XL" data-dim="Ø22 cm" data-price="17 €" alt="Comedero XL">
 </div>
 
 <div id="preview">
@@ -86,13 +76,13 @@ selector.onclick = e=>{
  e.target.classList.add('activo');
  selectedSize   = e.target.dataset.size;
  cuencoBase.src = e.target.src;
- if(!fotoCargada) cuencoBase.style.display='block';  // solo si no hay foto
+ if(!fotoCargada) cuencoBase.style.display='block';
  infoBox.textContent = `${e.target.dataset.dim} · ${e.target.dataset.price}`;
 };
 
 /* valor inicial */
 selector.firstElementChild.classList.add('activo');
-infoBox.textContent = 'Ø15 cm · 6 cm alto · 20 €';
+infoBox.textContent = 'Ø11 cm · 12 €';
 
 /* --- subida de imagen --- */
 document.getElementById('foto').onchange = e=>{
@@ -102,7 +92,7 @@ document.getElementById('foto').onchange = e=>{
  reader.onload = ev=>{
    grabado.src = ev.target.result;
    grabado.style.display='block';
-   cuencoBase.style.display='none';     // 🔸 ocultar cuenco base
+   cuencoBase.style.display='none';
    fotoCargada=true;
  };
  reader.readAsDataURL(file);
